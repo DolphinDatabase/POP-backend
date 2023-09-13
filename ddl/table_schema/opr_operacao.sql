@@ -4,8 +4,8 @@ CREATE TABLE opr_operacao (
     opr_fim_plantio DATE,
     opr_inicio_colheita DATE,
     opr_fim_colheita DATE,
-    opr_estado VARCHAR(2),
-    opr_municipio VARCHAR(50),
+    opr_std INT,
+    opr_mun BIGINT,
     opr_sol INT,
     opr_irg INT,
     opr_clt INT,
@@ -13,7 +13,7 @@ CREATE TABLE opr_operacao (
     opr_ccl INT,
     opr_emp BIGINT
 );
- 
+
 ALTER TABLE opr_operacao ADD CONSTRAINT FK_opr_sol
     FOREIGN KEY (opr_sol)
     REFERENCES sol_solo (sol_id);
@@ -37,3 +37,11 @@ ALTER TABLE opr_operacao ADD CONSTRAINT FK_opr_ccl
 ALTER TABLE opr_operacao ADD CONSTRAINT FK_opr_emp
     FOREIGN KEY (opr_emp)
     REFERENCES emp_empreendimento (emp_id);
+
+ALTER TABLE opr_operacao ADD CONSTRAINT FK_opr_std
+    FOREIGN KEY (opr_std)
+    REFERENCES std_estado (std_id);
+
+ALTER TABLE opr_operacao ADD CONSTRAINT FK_opr_mun
+    FOREIGN KEY (opr_mun)
+    REFERENCES mun_municipio (mun_id);

@@ -1,9 +1,9 @@
-from fastapi import FastApi 
+from fastapi import FastAPI 
 import controller
 import uvicorn
 
 
-app = FastApi()
+app = FastAPI()
 
 controller.user.configure_routes(app)
 

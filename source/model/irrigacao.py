@@ -9,6 +9,3 @@ class Irrigacao(Base):
 
     id = Column("irg_id", Integer, primary_key=True, index=True)
     descricao = Column("irg_descricao", String, index=True)
-
-    operacao = relationship("Operacao", back_populates="irrigacao")
-

@@ -13,4 +13,7 @@ class User(Base):
     senha = Column('usr_senha',String(255))
     permissao = Column('usr_permissao',Boolean)
 
+    # hashed_password = Column("usr_hashed_password", String)
+    # is_active = Column("usr_is_active", Boolean, default=True)
+
     historico = relationship('Historico', back_populates="usuario")

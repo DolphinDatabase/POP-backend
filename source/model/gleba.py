@@ -11,6 +11,5 @@ class Gleba(Base):
     id = Column("glb_id", Integer, primary_key=True, index=True)
     poligono = Column("glb_poligono", Geography('POLYGON'), nullable=False)
 
-
     operacao_id = Column("glb_opr", Integer, ForeignKey("opr_operacao.opr_id"))
     operacao = relationship("Operacao", back_populates="gleba")

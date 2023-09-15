@@ -10,5 +10,3 @@ class Cultivo(Base):
 
     id = Column("clt_id", Integer, primary_key=True, index=True)
     descricao = Column("clt_descricao", String, index=True)
-
-    operacao = relationship("Operacao", back_populates="cultivo")

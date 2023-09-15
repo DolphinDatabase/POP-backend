@@ -1,6 +1,8 @@
 from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import relationship
 
 from database import Base
+
 
 
 class Empreendimento(Base):
@@ -14,3 +16,5 @@ class Empreendimento(Base):
     variedade = Column("emp_variedade", String, index=True)
     cesta = Column("emp_cesta", String, index=True)
     zoneamento = Column("emp_zoneamento", String, index=True)
+
+    operacoes = relationship("Operacao", back_populates="empreendimento")

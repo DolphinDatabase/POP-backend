@@ -1,7 +1,7 @@
-from fastapi import FastApi
+from fastapi import FastAPI
 
 
-def configure_routes(app: FastApi):
+def configure_routes(app: FastAPI):
     @app.get("/lands")
     def list_land():
         pass

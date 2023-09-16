@@ -1,0 +1,6 @@
+import os 
+
+
+SECRET_KEY = os.getenv("OAUTH_SECRET_KEY", "SECRET")
+ALGORITHM = os.getenv("OAUTH_ALGORITHM", "HS256")
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("OAUTH_TOKEN_EXPIRE", "30"))

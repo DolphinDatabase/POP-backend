@@ -33,7 +33,9 @@ starlette==0.27.0
 tomlkit==0.12.1
 typing_extensions==4.7.1
 uvicorn==0.23.2
-uvloop==0.17.0
 watchfiles==0.20.0
 websockets==11.0.3
 wrapt==1.15.0
+python-multipart
+passlib[bcrypt]
+python-jose[cryptography]

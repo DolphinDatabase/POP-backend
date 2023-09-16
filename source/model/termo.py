@@ -9,3 +9,5 @@ class Termo(Base):
     data = Column('trm_data',Date)
     proprietario = Column('trm_proprietario',Boolean)
     text = Column('trm_text',String(255))
+
+    historico = relationship('Historico', back_populates='termo')

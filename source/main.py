@@ -10,5 +10,6 @@ app = FastAPI()
 app.include_router(controller.termo_router)
 app.include_router(controller.auth_router)
 app.include_router(controller.usuario_router)
+app.include_router(controller.historico_router)
 
 uvicorn.run(app=app, port=5050)

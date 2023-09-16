@@ -25,7 +25,7 @@ async def get(id:int):
         raise HTTPException(404)
 
 @router.get('/last', response_model=Termo)
-async def get(id:int):
+async def last():
     try:
         return get_last()
     except:

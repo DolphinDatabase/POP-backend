@@ -7,6 +7,10 @@ class UsuarioBase(BaseModel):
     class Config:
         orm_mode = True
 
+class GetUsuario(UsuarioBase):
+    id:int
+    proprietario:bool
+
 class CreateUsuario(UsuarioBase):
     proprietario:bool
     senha:str

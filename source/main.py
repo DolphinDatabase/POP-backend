@@ -1,4 +1,4 @@
-from fastapi import FastAPI 
+from fastapi import FastAPI
 from controller import auth_controller
 import uvicorn
 

@@ -7,6 +7,6 @@ class TermoBase(BaseModel):
     class Config:
         orm_mode = True
 
-class Termo(TermoBase):
+class GetTermo(TermoBase):
     id:int
     data:date

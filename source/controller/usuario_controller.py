@@ -1,33 +1,40 @@
 from fastapi import APIRouter, HTTPException
-import service.usuarioService as uService
-import schema.usuarioSchema as uSchema
+from service import UsuarioService
+from schema import GetUsuario,CreateUsuario,UsuarioBase,CreateHistorico
 
 router = APIRouter(
-    prefix='/usuario',
-    responses={404: {"description": "usuario not found"}}
+    prefix='/usuario'
 )
 
-@router.post('/',response_model=uSchema.GetUsuario)
-async def create(usuario: uSchema.CreateUsuario):
-    return uService.create_usuario(usuario)
+@router.post('/',response_model=GetUsuario)
+async def create(usuario: CreateUsuario):
+    u = UsuarioService.create_usuario(usuario)
+    return u
 
-@router.get('/{id}', response_model=uSchema.GetUsuario)
+@router.get('/{id}', response_model=GetUsuario)
 async def get(id:int):
     try:
-        return uService.get_usuario(id)
-    except:
-        raise HTTPException(404)
-
-@router.put('/{id}',response_model=uSchema.GetUsuario)
-async def update(id:int, usuario: uSchema.UsuarioBase):
+        return UsuarioService.get_usuario(id)
+    except Exception as e:
+        raise HTTPException(status_code=e.args[0],detail=e.args[1])
+    
+@router.put('/sign/{id}',response_model=GetUsuario)
+async def sign(id:int):
     try:
-        return uService.update_usuario(id,usuario)
-    except:
-        raise HTTPException(404)
+        return UsuarioService.usuario_sign(id)
+    except Exception as e:
+        raise HTTPException(status_code=e.args[0],detail=e.args[1])
+
+@router.put('/{id}',response_model=GetUsuario)
+async def update(id:int, usuario: UsuarioBase):
+    try:
+        return UsuarioService.update_usuario(id,usuario)
+    except Exception as e:
+        raise HTTPException(status_code=e.args[0],detail=e.args[1])
 
 @router.delete('/{id}')
 async def delete(id:int):
     try:
-        uService.delete_usuario(id)
-    except:
-        raise HTTPException(404)
+        UsuarioService.delete_usuario(id)
+    except Exception as e:
+         raise HTTPException(status_code=e.args[0],detail=e.args[1])

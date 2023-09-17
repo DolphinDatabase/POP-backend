@@ -1,12 +1,11 @@
 from fastapi import APIRouter, HTTPException
-import service.historicoService as hService
-import schema.historicoSchema as hSchema
+from schema import CreateHistorico,GetHistorico
+from service import HistoricoService
 
 router = APIRouter(
-    prefix='/historico',
-    responses={404: {"description": "historico not found"}}
+    prefix='/historico'
 )
 
-@router.post('/',response_model=hSchema.HistoricoBase)
-def create(historico:hSchema.HistoricoBase):
-    return hService.create_historico(historico)
+@router.get('/{id}',response_model=list[GetHistorico])
+async def get_by_usuario(id:int):
+    return HistoricoService.get_historico_by_user(id) 

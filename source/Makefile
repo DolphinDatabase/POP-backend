@@ -1,5 +1,5 @@
 run:
-	uvicorn main:app --reload
+	python main.py
 
 install_postgis:
 	docker run -p 5432:5432 --name dolphin-postgis -e POSTGRES_PASSWORD=admin -d postgis/postgis

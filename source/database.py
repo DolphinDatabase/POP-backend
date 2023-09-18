@@ -1,11 +1,10 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-
-SQLALCHEMY_DATABASE_URL = "postgresql://postgres:root@localhost:5432/pop-dev"
+import configuration
 
 engine = create_engine(
-    SQLALCHEMY_DATABASE_URL
+    configuration.DATABASE_URL
 )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

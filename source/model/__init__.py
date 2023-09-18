@@ -12,8 +12,7 @@ from .municipio import Municipio
 from .operacao import Operacao
 from .propriedade import Propriedade
 from .solo import Solo
-from .termo import Term
-from .user import User
+from .termo import Termo
 
 __all__ = [
     "Token",
@@ -30,6 +29,5 @@ __all__ = [
     "Operacao",
     "Propriedade",
     "Solo",
-    "Term",
-    "User"
+    "Termo",
 ]

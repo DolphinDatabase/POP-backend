@@ -1,8 +1,15 @@
 from fastapi import FastAPI
-from controller import auth_controller
+import controller
 import uvicorn
+from database import Base, engine
 
+Base.metadata.create_all(engine)
 
 app = FastAPI()
-auth_controller.configure(app)
+
+app.include_router(controller.termo_router)
+app.include_router(controller.auth_router)
+app.include_router(controller.usuario_router)
+app.include_router(controller.historico_router)
+
 uvicorn.run(app=app, port=5050)

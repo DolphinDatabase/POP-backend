@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-import service.usuarioService as uService
+import service.usuario_service as uService
 import schema.usuarioSchema as uSchema
 
 router = APIRouter(

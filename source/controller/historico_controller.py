@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-import service.historicoService as hService
+import service.historico_service as hService
 import schema.historicoSchema as hSchema
 
 router = APIRouter(

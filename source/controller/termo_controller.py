@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from service.termoService import create_termo,index_termo,get_termo,update_termo,delete_termo,get_last
+from service.termo_service import create_termo,index_termo,get_termo,update_termo,delete_termo,get_last
 from schema.termoSchema import TermoBase,Termo
 
 router = APIRouter(

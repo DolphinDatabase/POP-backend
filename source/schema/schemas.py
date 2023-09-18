@@ -1,29 +1,6 @@
 from pydantic import BaseModel
 
 
-class UserBase(BaseModel):
-    email: str
-
-
-class UserCreate(UserBase):
-    senha: str
-    # password: str
-
-
-class User(UserBase):
-    id: int
-    nome: str
-    doc: str
-    proprietario: str
-    email: str
-    senha: str
-    permissao: bool
-    # is_active: bool
-
-    class Config:
-        orm_mode = True
-
-
 class Propriedade(BaseModel):
     operacao_id: int
 

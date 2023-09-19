@@ -7,9 +7,9 @@ class Historico(Base):
     __tablename__ = 'htr_historico'
 
     usuario_id = Column('htr_usr',Integer, ForeignKey('usr_usuario.usr_id'),primary_key=True)
-    usuario = relationship('Usuario', back_populates="historico")
+    usuario = relationship('Usuario', back_populates="historico", lazy='subquery')
 
     termo_id = Column('hrt_trm',Integer, ForeignKey('trm_termo.trm_id'),primary_key=True)
-    termo = relationship('Termo', back_populates="historico")
+    termo = relationship('Termo', back_populates="historico", lazy='subquery')
     
     data = Column('hrt_data',Date)

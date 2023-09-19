@@ -10,6 +10,7 @@ class UsuarioBase(BaseModel):
 class GetUsuario(UsuarioBase):
     id:int
     proprietario:bool
+    permissao:bool
 
 class CreateUsuario(UsuarioBase):
     proprietario:bool

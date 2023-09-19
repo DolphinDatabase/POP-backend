@@ -31,5 +31,5 @@ __all__ = [
     "Propriedade",
     "Solo",
     "Termo",
-    "Usuario"
+    "Usuario",
 ]

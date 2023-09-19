@@ -14,8 +14,11 @@ class Operacao(Base):
     fim_colheita = Column("opr_fim_colheita", Date, index=True)
 
     estado_id = Column("opr_estado", Integer, ForeignKey("std_estado.std_id"))
+    estado = relationship("Estado")
+
     municipio_id = Column("opr_municipio", Integer,
                           ForeignKey("mun_municipio.mun_id"))
+    municipio = relationship("Municipio")
 
     solo_id = Column("opr_sol", Integer, ForeignKey("sol_solo.sol_id"))
     solo = relationship("Solo")

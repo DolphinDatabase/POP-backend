@@ -12,7 +12,7 @@ class Gleba(Base):
     _poligono = Column("glb_poligono", Geography('POLYGON'), nullable=False)
 
     operacao_id = Column("glb_opr", Integer, ForeignKey("opr_operacao.opr_id"))
-    operacao = relationship("Operacao", back_populates="gleba")
+    operacao = relationship("Operacao", back_populates="gleba", lazy="selectin")
 
     @property
     def poligono(self):

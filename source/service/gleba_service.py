@@ -1,6 +1,8 @@
 from database import SessionLocal
 from model.gleba import Gleba
 from schema.schemas import Gleba as GlebaBase
+from geoalchemy2.functions import ST_AsGeoJSON
+import json
 
 
 def get_glebas(skip: int = 0, limit: int = 100):

@@ -1,3 +1,5 @@
+from ast import List, Tuple
+from typing import Optional
 from pydantic import BaseModel
 
 
@@ -55,10 +57,17 @@ class Ciclo(BaseModel):
     class Config:
         orm_mode = True
 
+class Geometry(BaseModel):
+    type: str
+    coordinates: list[list[tuple[float,float]]]
+
+class Feature(BaseModel):
+    type: str
+    geometry: Geometry
 
 class Gleba(BaseModel):
-    operacao: Operacao
-
+    id:int
+    poligono: Feature
     class Config:
         orm_mode = True
 

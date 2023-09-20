@@ -29,6 +29,11 @@ class UsuarioService:
             raise Exception(404, 'Usuario not found')
         return u
     
+    def get_usuario_by_email(email: str) -> Usuario:
+        db = SessionLocal()
+        usuario = db.query(Usuario).where(Usuario.email == email).first()
+        return usuario
+
     def usuario_sign(id:int):
         db = SessionLocal()
         u = db.query(Usuario).where(Usuario.id == id).first()

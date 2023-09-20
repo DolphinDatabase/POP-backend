@@ -5,7 +5,7 @@ from service import operacao_service
 from schema import schemas
 from database import engine, Base
 
-Base.metadata.create_all(bind=engine)
+# Base.metadata.create_all(bind=engine)
 
 router = APIRouter(prefix="/operacao")
 

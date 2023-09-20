@@ -4,11 +4,11 @@ import uvicorn
 from database import Base, engine
 from fastapi.middleware.cors import CORSMiddleware
 
-Base.metadata.create_all(engine)
+# Base.metadata.create_all(engine)
 
 app = FastAPI()
 origins = [
-    "http://localhost:5173",
+    "*"
 ]
 
 app.add_middleware(

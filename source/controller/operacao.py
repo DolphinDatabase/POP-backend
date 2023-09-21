@@ -15,7 +15,7 @@ async def get_operacaos():
     return operacao_service.get_operacaos()
 
 
-@router.get('/{id}', response_model=schemas.Gleba)
+@router.get('/{id}', response_model=schemas.Operacao)
 async def get(id:int):
     try:
         return operacao_service.get_operacao(id)

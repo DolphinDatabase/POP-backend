@@ -1,14 +1,16 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from service import TermoService
 from schema import TermoBase,GetTermo
+from model import Usuario
+from typing import Annotated
+from .auth_controller import get_current_user
 
 router = APIRouter(
     prefix='/termo'
 )
 
-
 @router.post('/',response_model=GetTermo)
-async def create(termo: TermoBase):
+async def create(termo: TermoBase,  user: Annotated[Usuario, Depends(get_current_user)]):
     return TermoService.create_termo(termo)
 
 

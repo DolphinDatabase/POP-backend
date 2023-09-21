@@ -10,8 +10,6 @@ from .usuario_service import UsuarioService
 
 def authenticate_user(email: str, password: str) -> Usuario:
     usuario: Usuario = UsuarioService.get_usuario_by_email(email)
-    print(crypt.hash_password(password))
-    print(usuario.senha)
     if not usuario or crypt.hash_password(password) != usuario.senha:
         return False
 

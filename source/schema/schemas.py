@@ -1,6 +1,13 @@
-from ast import List, Tuple
-from typing import Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, datetime_parse
+from datetime import date
+
+
+class Estado(BaseModel):
+    descricao: str
+
+
+class Municipio(BaseModel):
+    descricao: str
 
 
 class Propriedade(BaseModel):
@@ -10,49 +17,52 @@ class Propriedade(BaseModel):
         orm_mode = True
 
 
-class Operacao(BaseModel):
-    inicio_plantio: str
-    fim_plantio: str
-    inicio_colheita: str
-    fim_colheita: str
-    estado: str
-    municipio: str
-
-    solo_id: int
-    irrigacao_id: int
-    cultivo_id: int
-    grao_semente_id: int
-    ciclo_id: int
-    gleba_id: int
-    empreendimento_id: int
-
-    propriedades: list[Propriedade] = []
-
-    class Config:
-        orm_mode = True
-
-
 class Solo(BaseModel):
+    descricao: str
     class Config:
         orm_mode = True
 
 
 class Irrigacao(BaseModel):
+    descricao: str
     class Config:
         orm_mode = True
 
 
 class Cultivo(BaseModel):
+    descricao: str
     class Config:
         orm_mode = True
 
 
 class GraoSemente(BaseModel):
+    descricao: str
     class Config:
         orm_mode = True
 
 
 class Ciclo(BaseModel):
+    descricao: str
+    class Config:
+        orm_mode = True
+
+
+class Operacao(BaseModel):
+    inicio_plantio: date
+    fim_plantio: date
+    inicio_colheita: date
+    fim_colheita: date
+    estado: Estado
+    municipio: Municipio
+
+    solo: Solo
+    irrigacao: Irrigacao
+    cultivo: Cultivo
+    grao_semente: GraoSemente
+    ciclo: Ciclo
+    empreendimento_id: int
+
+    propriedades: list[Propriedade] = []
 
     class Config:
         orm_mode = True
@@ -62,7 +72,8 @@ class Coordinates(BaseModel):
 
 class Geometry(BaseModel):
     type: str
-    coordinates: list[list[tuple[float,float]]]
+    coordinates: list[list[tuple[float, float]]]
+
 
 class PolygonProperties(BaseModel):
     gleba_id:int
@@ -78,8 +89,9 @@ class FeatureCollections(BaseModel):
     features: list[Feature]
 
 class Gleba(BaseModel):
-    id:int
+    id: int
     poligono: Feature
+
     class Config:
         orm_mode = True
 

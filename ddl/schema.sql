@@ -1,10 +1,33 @@
 CREATE TABLE usr_usuario (
     usr_id SERIAL PRIMARY KEY,
     usr_nome VARCHAR(150),
+    usr_doc VARCHAR(14),
+    usr_proprietario BOOLEAN,
     usr_email VARCHAR(255),
     usr_senha VARCHAR(255),
     usr_permissao BOOLEAN
-)
+);
+
+CREATE TABLE trm_termo (
+    trm_id SERIAL PRIMARY KEY,
+    trm_data DATE,
+    trm_proprietario BOOLEAN,
+    trm_text VARCHAR(255)
+);
+
+CREATE TABLE htr_historico (
+    htr_usr INT,
+    hrt_trm INT,
+    hrt_data DATE
+);
+
+ALTER TABLE htr_historico ADD CONSTRAINT FK_htr_usr
+    FOREIGN KEY (htr_usr)
+    REFERENCES usr_usuario(usr_id);
+
+ALTER TABLE htr_historico ADD CONSTRAINT FK_htr_trm
+    FOREIGN KEY (hrt_trm)
+    REFERENCES trm_termo(trm_id);
 
 CREATE TABLE ccl_ciclo (
     ccl_id INT PRIMARY KEY,
@@ -112,6 +135,7 @@ ALTER TABLE glb_gleba ADD CONSTRAINT FK_glb_opr
 
 CREATE TABLE prp_propriedade (
     prp_id SERIAL PRIMARY KEY,
+    prp_doc VARCHAR(14),
     prp_sncr VARCHAR(255),
     prp_nirf VARCHAR(255),
     prp_car VARCHAR(255),

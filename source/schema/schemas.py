@@ -57,13 +57,25 @@ class Ciclo(BaseModel):
     class Config:
         orm_mode = True
 
+class Coordinates(BaseModel):
+    coordinates: tuple[tuple[float,float]]
+
 class Geometry(BaseModel):
     type: str
     coordinates: list[list[tuple[float,float]]]
 
+class PolygonProperties(BaseModel):
+    gleba_id:int
+    operacao_id:int
+
 class Feature(BaseModel):
     type: str
     geometry: Geometry
+    properties: PolygonProperties
+
+class FeatureCollections(BaseModel):
+    type: str
+    features: list[Feature]
 
 class Gleba(BaseModel):
     id:int

@@ -6,12 +6,12 @@ from database import get_db
 router = APIRouter(prefix="/gleba")
 
 
-@router.get('/', response_model=list[schemas.Gleba])
-async def get_glebas():
-    return gleba_service.get_glebas()
+@router.get('/', response_model=schemas.FeatureCollections)
+async def get_glebas(skip: int = 0, limit: int = 100):
+    return gleba_service.get_glebas(skip,limit)
 
 
-@router.get('/{id}', response_model=schemas.Gleba)
+@router.get('/{id}', response_model=schemas.Feature)
 async def get(id:int):
     try:
         return gleba_service.get_gleba(id)

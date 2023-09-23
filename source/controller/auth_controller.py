@@ -5,6 +5,7 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 
 from model import Token, Usuario
+from schema.usuario_schema import GetUsuario
 import service
 import configuration
 
@@ -57,6 +58,10 @@ async def login_for_access_token(
     )
 
     return {"access_token": access_token, "expire": expire, "token_type": "bearer"}
+
+@router.get("/",response_model=GetUsuario)
+async def get_current(user: Annotated[Usuario, Depends(get_current_user)]):
+    return user
 
 
 @router.put("/", response_model=Token)

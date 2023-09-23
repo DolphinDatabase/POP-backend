@@ -46,6 +46,16 @@ class Ciclo(BaseModel):
     class Config:
         orm_mode = True
 
+class Empreendimento(BaseModel):
+    finalidade:str
+    atividade:str
+    modalidade:str
+    produto:str
+    variedade:str
+    cesta:str
+    zoneamento:str
+    class Config:
+        orm_mode = True
 
 class Operacao(BaseModel):
     inicio_plantio: date
@@ -60,7 +70,7 @@ class Operacao(BaseModel):
     cultivo: Cultivo
     grao_semente: GraoSemente
     ciclo: Ciclo
-    empreendimento_id: int
+    empreendimento: Empreendimento
 
     propriedades: list[Propriedade] = []
 

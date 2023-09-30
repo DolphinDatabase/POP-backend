@@ -9,3 +9,15 @@ run_postgis:
 
 psql:
 	docker exec -ti dolphin-postgis psql -U postgres
+
+docker:
+
+	docker logout
+
+	docker build -t dolphindatabase/visiona-back:latest .
+
+	docker login
+
+	docker push dolphindatabase/visiona-back:latest
+
+	docker run -p 5050:5050 dolphindatabase/visiona-back:latest

@@ -1,13 +1,6 @@
-annotated-types==0.5.0
-anyio==3.7.1
-astroid==2.15.6
-cffi==1.15.1
-click==8.1.7
-cryptography==41.0.3
+cryptography
 dill==0.3.7
-ecdsa==0.18.0
 fastapi==0.103.1
-flake8==6.1.0
 GeoAlchemy2==0.14.1
 greenlet==2.0.2
 h11==0.14.0
@@ -15,10 +8,7 @@ httptools==0.6.0
 idna==3.4
 isort==5.12.0
 lazy-object-proxy==1.9.0
-Mako==1.2.4
-MarkupSafe==2.1.3
 mccabe==0.7.0
-numpy==1.25.2
 packaging==23.1
 platformdirs==3.10.0
 psycopg2==2.9.7
@@ -32,10 +22,7 @@ pylint==2.17.5
 python-dotenv==1.0.0
 python-jose==3.3.0
 python-multipart==0.0.6
-PyYAML==6.0.1
-rsa==4.9
 shapely==2.0.1
-six==1.16.0
 sniffio==1.3.0
 SQLAlchemy==2.0.20
 starlette==0.27.0

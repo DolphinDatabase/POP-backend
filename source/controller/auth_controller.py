@@ -11,7 +11,7 @@ import configuration
 
 
 router = APIRouter(
-    prefix='/auth'
+    prefix='/auth',
 )
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth")
@@ -22,10 +22,17 @@ credentials_exception = HTTPException(
     headers={"WWW-Authenticate": "Bearer"},
     )
 
+role_exception = HTTPException(
+    status_code=status.HTTP_401_UNAUTHORIZED,
+    detail="Role unauthorized",
+    headers={"WWW-Authenticate": "Bearer"},
+    )
+
+
 def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     try:
         payload = jwt.decode(token, configuration.OAUTH_SECRET_KEY, algorithms=[configuration.OAUTH_ALGORITHM])
-        
+
         email: str = payload.get("sub")
         expire_time: int = payload.get("exp")
 
@@ -40,6 +47,13 @@ def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     if user is None:
         raise credentials_exception
     return user
+
+
+def get_adm_user(user: Annotated[Usuario, Depends(get_current_user)]):
+    if user.adm:
+        return user
+    else:
+        raise role_exception
 
 
 @router.post("/", response_model=Token)
@@ -59,7 +73,8 @@ async def login_for_access_token(
 
     return {"access_token": access_token, "expire": expire, "token_type": "bearer"}
 
-@router.get("/",response_model=GetUsuario)
+
+@router.get("/", response_model=GetUsuario)
 async def get_current(user: Annotated[Usuario, Depends(get_current_user)]):
     return user
 

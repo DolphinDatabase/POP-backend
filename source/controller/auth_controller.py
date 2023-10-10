@@ -83,8 +83,8 @@ async def get_current(user: Annotated[Usuario, Depends(get_current_user)]):
 async def refresh_access_token(
     user: Annotated[Usuario, Depends(get_current_user)]
 ):
-    access_token, expire = service.create_access_token(
+    access_token, expire, role = service.create_access_token(
         data={"sub": user.email}
     )
-    return {"access_token": access_token, "expire": expire, "token_type": "bearer"}
-
+    role = "adm" if user.adm else "user"
+    return {"access_token": access_token, "expire": expire, "role": role, "token_type": "bearer"}

@@ -12,8 +12,8 @@ async def get_by_estado(estado:str,user: Annotated[Usuario, Depends(get_current_
     return gleba_service.get_gleba_by_estado(estado,skip,limit)
 
 @router.get('/location', response_model=schemas.FeatureCollections)
-async def get_by_estado(user: Annotated[Usuario, Depends(get_current_user)],lat:float,long:float):
-    return gleba_service.get_gleba_by_location(lat,long)
+async def get_by_estado(user: Annotated[Usuario, Depends(get_current_user)],lat:float,long:float,size:float,skip: int = 0, limit: int = 100):
+    return gleba_service.get_gleba_by_location(lat,long,size)
 
 @router.get('/', response_model=schemas.FeatureCollections)
 async def get_glebas(user: Annotated[Usuario, Depends(get_current_user)],skip: int = 0, limit: int = 100):

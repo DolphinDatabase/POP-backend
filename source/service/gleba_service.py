@@ -1,6 +1,6 @@
 from database import SessionLocal
 from model import Gleba,Operacao,Estado
-from geoalchemy2.functions import ST_MakePoint,ST_SetSRID,ST_Distance
+from geoalchemy2.functions import ST_MakePoint,ST_SetSRID,ST_Distance,ST_GeographyFromText
 
 def get_glebas(skip: int = 0, limit: int = 100):
     with SessionLocal() as db:
@@ -40,12 +40,19 @@ def get_gleba_by_estado(sigla: str,skip:int=0,limit:int=100):
             features.append(feature)
     return {'type':'FeatureCollection','features':features}
 
-def get_gleba_by_location(lat:float,long:float):
+def get_gleba_by_location(lat:float,long:float,size:float,skip:int = 0,limit:int=100):
     with SessionLocal() as db:
         point = ST_SetSRID(ST_MakePoint(long, lat), 4326)
+
+        conversion_factor_expr = (
+            1.0 / ST_Distance(
+                ST_GeographyFromText(f'SRID=4326;POINT(-41.03180081265459 -9.818537004058156)'),
+                ST_GeographyFromText(f'SRID=4326;POINT(-41.03180081265459 -10.818537004058156)')
+            )
+        )
         glebas = db.query(
             Gleba
-        ).order_by(ST_Distance(Gleba._poligono, point)).limit(100)
+        ).filter(ST_Distance(Gleba._poligono, point)<=size*conversion_factor_expr).offset(skip).limit(limit).all()
         features = []
         for glb in glebas:
             feature = glb.poligono

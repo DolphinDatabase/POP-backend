@@ -30,4 +30,4 @@ app.include_router(controller.operacao_router)
 def home():
     return "Funcionando"
 
-uvicorn.run(app=app, port=5050)
+uvicorn.run(app=app, host="0.0.0.0",port=5050)

@@ -46,8 +46,8 @@ def get_gleba_by_location(lat:float,long:float,size:float,skip:int = 0,limit:int
 
         conversion_factor_expr = (
             1.0 / ST_Distance(
-                ST_GeographyFromText(f'SRID=4326;POINT(-41.03180081265459 -9.818537004058156)'),
-                ST_GeographyFromText(f'SRID=4326;POINT(-41.03180081265459 -10.818537004058156)')
+                ST_GeographyFromText(f'SRID=4326;POINT({long} {lat})'),
+                ST_GeographyFromText(f'SRID=4326;POINT({long} {lat+1})')
             )
         )
         glebas = db.query(

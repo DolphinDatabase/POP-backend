@@ -5,7 +5,8 @@ CREATE TABLE usr_usuario (
     usr_proprietario BOOLEAN,
     usr_email VARCHAR(255),
     usr_senha VARCHAR(255),
-    usr_permissao BOOLEAN
+    usr_permissao BOOLEAN,
+	usr_adm BOOLEAN
 );
 
 CREATE TABLE trm_termo (

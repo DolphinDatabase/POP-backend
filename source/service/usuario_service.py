@@ -1,5 +1,5 @@
 from database import SessionLocal
-from model import Usuario
+from model import Usuario,Historico
 from schema import CreateUsuario,UsuarioBase,CreateHistorico
 from .historico_service import HistoricoService
 from .termo_service import TermoService

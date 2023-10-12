@@ -18,4 +18,5 @@ class Usuario(Base):
     # hashed_password = Column("usr_hashed_password", String)
     # is_active = Column("usr_is_active", Boolean, default=True)
 
-    historico = relationship('Historico', back_populates="usuario")
+    historico = relationship('Historico', back_populates="usuario", cascade='all, delete-orphan')
+

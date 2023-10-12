@@ -24,7 +24,7 @@ CREATE TABLE htr_historico (
 ALTER TABLE htr_historico ADD CONSTRAINT FK_htr_usr
     FOREIGN KEY (htr_usr)
     REFERENCES usr_usuario(usr_id)
-    ON DELETE CASCADE;
+    DELETE ON CASCADE;
 
 ALTER TABLE htr_historico ADD CONSTRAINT FK_htr_trm
     FOREIGN KEY (hrt_trm)

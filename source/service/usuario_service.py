@@ -14,14 +14,16 @@ class UsuarioService:
                     proprietario=usuario.proprietario,
                     email=usuario.email,
                     senha=crypt.hash_password(usuario.senha),
-                    permissao=True)
+                    permissao=True,
+                    adm=usuario.adm)
         db = SessionLocal()
         db.add(u)
         db.commit()
         db.refresh(u)
         db.close()
-        t = TermoService.get_last(usuario.proprietario)
-        HistoricoService.create_historico(CreateHistorico(usuario=u.id, termo=t.id))
+        if not usuario.adm:
+            t = TermoService.get_last(usuario.proprietario)
+            HistoricoService.create_historico(CreateHistorico(usuario=u.id, termo=t.id))
         return u
 
     @staticmethod

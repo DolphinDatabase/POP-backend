@@ -13,9 +13,11 @@ class UsuarioBase(BaseModel):
 class GetUsuario(UsuarioBase):
     id: int
     proprietario: bool
+    adm: bool
     permissao: bool
 
 
 class CreateUsuario(UsuarioBase):
     proprietario: bool
+    adm: bool = False
     senha: str

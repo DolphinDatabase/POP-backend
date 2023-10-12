@@ -50,6 +50,7 @@ def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
 
 
 def get_adm_user(user: Annotated[Usuario, Depends(get_current_user)]):
+    print(user.adm)
     if user.adm:
         return user
     else:

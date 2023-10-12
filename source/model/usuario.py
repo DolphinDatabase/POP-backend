@@ -13,6 +13,7 @@ class Usuario(Base):
     email = Column('usr_email', String(255))
     senha = Column('usr_senha', String(255))
     permissao = Column('usr_permissao', Boolean)
+    adm = Column('usr_adm', Boolean, default=False)
 
     # hashed_password = Column("usr_hashed_password", String)
     # is_active = Column("usr_is_active", Boolean, default=True)

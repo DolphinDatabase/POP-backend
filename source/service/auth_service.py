@@ -25,4 +25,3 @@ def create_access_token(data: dict) -> (str, float):
                              configuration.OAUTH_SECRET_KEY,
                              algorithm=configuration.OAUTH_ALGORITHM)
     return encoded_jwt, expire
-

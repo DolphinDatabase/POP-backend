@@ -5,14 +5,15 @@ CREATE TABLE usr_usuario (
     usr_proprietario BOOLEAN,
     usr_email VARCHAR(255),
     usr_senha VARCHAR(255),
-    usr_permissao BOOLEAN
+    usr_permissao BOOLEAN,
+	usr_adm BOOLEAN
 );
 
 CREATE TABLE trm_termo (
     trm_id SERIAL PRIMARY KEY,
     trm_data DATE,
     trm_proprietario BOOLEAN,
-    trm_text VARCHAR(255)
+    trm_text TEXT
 );
 
 CREATE TABLE htr_historico (
@@ -23,7 +24,8 @@ CREATE TABLE htr_historico (
 
 ALTER TABLE htr_historico ADD CONSTRAINT FK_htr_usr
     FOREIGN KEY (htr_usr)
-    REFERENCES usr_usuario(usr_id);
+    REFERENCES usr_usuario(usr_id)
+    DELETE ON CASCADE;
 
 ALTER TABLE htr_historico ADD CONSTRAINT FK_htr_trm
     FOREIGN KEY (hrt_trm)

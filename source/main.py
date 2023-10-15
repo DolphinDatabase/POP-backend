@@ -26,4 +26,8 @@ app.include_router(controller.historico_router)
 app.include_router(controller.gleba_router)
 app.include_router(controller.operacao_router)
 
-uvicorn.run(app=app, port=5050)
+@app.get("/")
+def home():
+    return "Funcionando"
+
+uvicorn.run(app=app, host="0.0.0.0",port=5050)

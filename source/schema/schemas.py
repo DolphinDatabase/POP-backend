@@ -19,43 +19,51 @@ class Propriedade(BaseModel):
 
 class Solo(BaseModel):
     descricao: str
+
     class Config:
         orm_mode = True
 
 
 class Irrigacao(BaseModel):
     descricao: str
+
     class Config:
         orm_mode = True
 
 
 class Cultivo(BaseModel):
     descricao: str
+
     class Config:
         orm_mode = True
 
 
 class GraoSemente(BaseModel):
     descricao: str
+
     class Config:
         orm_mode = True
 
 
 class Ciclo(BaseModel):
     descricao: str
+
     class Config:
         orm_mode = True
 
+
 class Empreendimento(BaseModel):
-    finalidade:str
-    atividade:str
-    modalidade:str
-    produto:str
-    variedade:str
-    cesta:str
-    zoneamento:str
+    finalidade: str
+    atividade: str
+    modalidade: str
+    produto: str
+    variedade: str
+    cesta: str
+    zoneamento: str
+
     class Config:
         orm_mode = True
+
 
 class Operacao(BaseModel):
     inicio_plantio: date
@@ -77,8 +85,10 @@ class Operacao(BaseModel):
     class Config:
         orm_mode = True
 
+
 class Coordinates(BaseModel):
     coordinates: tuple[tuple[float,float]]
+
 
 class Geometry(BaseModel):
     type: str
@@ -86,17 +96,20 @@ class Geometry(BaseModel):
 
 
 class PolygonProperties(BaseModel):
-    gleba_id:int
-    operacao_id:int
+    gleba_id: int
+    operacao_id: int
+
 
 class Feature(BaseModel):
     type: str
     geometry: Geometry
     properties: PolygonProperties
 
+
 class FeatureCollections(BaseModel):
     type: str
     features: list[Feature]
+
 
 class Gleba(BaseModel):
     id: int
@@ -107,7 +120,6 @@ class Gleba(BaseModel):
 
 
 class Empreendimento(BaseModel):
-
     operacoes: list[Operacao] = []
 
     class Config:

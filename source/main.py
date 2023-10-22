@@ -3,6 +3,10 @@ import controller
 import uvicorn
 from database import Base, engine
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi_redis_cache import RedisCache
+from fastapi_cache import CacheControlMiddleware
+
+redis_cache = RedisCache()
 
 # Base.metadata.create_all(engine)
 
@@ -13,10 +17,12 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
+    CacheControlMiddleware,
     allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"],
+    allow_headers=["*"], 
+    cache=redis_cache
 )
 
 app.include_router(controller.termo_router)

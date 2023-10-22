@@ -8,6 +8,7 @@ from model import Token, Usuario
 from schema.usuario_schema import GetUsuario
 import service
 import configuration
+from .redis_cache.redis import cache_response
 
 
 router = APIRouter(
@@ -76,6 +77,7 @@ async def login_for_access_token(
 
 
 @router.get("/", response_model=GetUsuario)
+@cache_response(ttl=3600)
 async def get_current(user: Annotated[Usuario, Depends(get_current_user)]):
     return user
 

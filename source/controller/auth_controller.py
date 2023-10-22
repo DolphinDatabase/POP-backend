@@ -1,6 +1,6 @@
 from typing import Annotated
-from datetime import datetime, timedelta
-from fastapi import Depends, FastAPI, HTTPException, status, APIRouter
+from datetime import datetime
+from fastapi import Depends, HTTPException, status, APIRouter
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 
@@ -67,7 +67,7 @@ async def login_for_access_token(
             )
     if not user:
         raise credentials_exception
-    
+
     access_token, expire = service.create_access_token(
         data={"sub": user.email}
     )

@@ -2,7 +2,7 @@ from geoalchemy2 import Geography
 from sqlalchemy import Column, ForeignKey, Integer
 from sqlalchemy.orm import relationship
 from geoalchemy2.shape import to_shape
-import shapely.geometry 
+import shapely.geometry
 from database import Base
 
 
@@ -19,4 +19,5 @@ class Gleba(Base):
     def poligono(self):
         plg = shapely.geometry.mapping(to_shape(self._poligono))
         plg['coordinates'] = [item for item in plg['coordinates'] if item is not None]
-        return {'type':'Feature', 'geometry': plg}
+        return {'type': 'Feature', 'geometry': plg}
+

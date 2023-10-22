@@ -19,4 +19,3 @@ class Usuario(Base):
     # is_active = Column("usr_is_active", Boolean, default=True)
 
     historico = relationship('Historico', back_populates="usuario", cascade='all, delete-orphan')
-

@@ -1,8 +1,6 @@
 from fastapi import APIRouter, Depends
-from schema import CreateHistorico,GetHistorico
+from schema import GetHistorico
 from service import HistoricoService
-from model import Usuario
-from typing import Annotated
 from .auth_controller import get_current_user
 
 router = APIRouter(

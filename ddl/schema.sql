@@ -21,19 +21,28 @@ CREATE TABLE trm_termo (
     trm_text TEXT
 );
 
-CREATE TABLE trc_termo_condicoes (
+CREATE TABLE trc_termo_condicao (
 	trc_id SERIAL PRIMARY KEY,
 	trm_id INT,
 	trc_texto TEXT,
 	CONSTRAINT fk_trm_id FOREIGN KEY(trm_id) REFERENCES trm_termo(trm_id)
-)
+);
 
-CREATE TABLE htr_historico (
+CREATE TABLE utr_usuario_termo (
 	usr_id INT,
-    trm_id INT,
-    htr_data DATE,
-	CONSTRAINT fk_usr_id FOREIGN KEY(usr_id) REFERENCES usr_usuario(usr_id) DELETE ON CASCADE,
-	CONSTRAINT fk_trm_id FOREIGN KEY(trm_id) REFERENCES trm_termo(trm_id) DELETE ON CASCADE
+	trm_id INT,
+	utr_aceite BOOLEAN,
+	CONSTRAINT fk_usr_id FOREIGN KEY(usr_id) REFERENCES usr_usuario(usr_id),
+	CONSTRAINT fk_trm_id FOREIGN KEY(trm_id) REFERENCES trc_termo(trm_id)
+);
+
+CREATE TABLE utc_usuario_termo_condicao (
+	usr_id INT,
+	trc_id INT,
+	utc_aceite BOOLEAN,
+	utc_data DATE,
+	CONSTRAINT fk_usr_id FOREIGN KEY(usr_id) REFERENCES usr_usuario(usr_id),
+	CONSTRAINT fk_trc_id FOREIGN KEY(trc_id) REFERENCES trc_termo_condicao(trc_id)
 );
 
 CREATE TABLE ccl_ciclo (

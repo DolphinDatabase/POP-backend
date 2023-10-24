@@ -7,4 +7,3 @@ class Grupo(Base):
 
     id = Column('grp_id', Integer, primary_key=True, index=True)
     descricao = Column('grp_descricao', String)
-    escopo = Column('grp_escopo', String)

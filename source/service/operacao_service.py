@@ -1,6 +1,5 @@
 from database import SessionLocal
 from model.operacao import Operacao
-from schema.schemas import Operacao as OperacaoBase
 
 
 def get_operacaos(skip: int = 0, limit: int = 100):
@@ -14,3 +13,4 @@ def get_operacao(id: int):
         if operacao is None:
             raise Exception()
         return operacao
+

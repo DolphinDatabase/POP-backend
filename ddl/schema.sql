@@ -1,12 +1,17 @@
+CREATE TABLE grp_grupo (
+	grp_id SERIAL PRIMARY KEY,
+	grp_descricao VARCHAR(150)
+);
+
 CREATE TABLE usr_usuario (
     usr_id SERIAL PRIMARY KEY,
     usr_nome VARCHAR(150),
     usr_doc VARCHAR(14),
-    usr_proprietario BOOLEAN,
     usr_email VARCHAR(255),
     usr_senha VARCHAR(255),
     usr_permissao BOOLEAN,
-	usr_adm BOOLEAN
+	grp_id INT,
+	CONSTRAINT fk_grp_id FOREIGN KEY(grp_id) REFERENCES grp_grupo(grp_id)
 );
 
 CREATE TABLE trm_termo (
@@ -16,20 +21,20 @@ CREATE TABLE trm_termo (
     trm_text TEXT
 );
 
+CREATE TABLE trc_termo_condicoes (
+	trc_id SERIAL PRIMARY KEY,
+	trm_id INT,
+	trc_texto TEXT,
+	CONSTRAINT fk_trm_id FOREIGN KEY(trm_id) REFERENCES trm_termo(trm_id)
+)
+
 CREATE TABLE htr_historico (
-    htr_usr INT,
-    hrt_trm INT,
-    hrt_data DATE
+	usr_id INT,
+    trm_id INT,
+    htr_data DATE,
+	CONSTRAINT fk_usr_id FOREIGN KEY(usr_id) REFERENCES usr_usuario(usr_id) DELETE ON CASCADE,
+	CONSTRAINT fk_trm_id FOREIGN KEY(trm_id) REFERENCES trm_termo(trm_id) DELETE ON CASCADE
 );
-
-ALTER TABLE htr_historico ADD CONSTRAINT FK_htr_usr
-    FOREIGN KEY (htr_usr)
-    REFERENCES usr_usuario(usr_id)
-    DELETE ON CASCADE;
-
-ALTER TABLE htr_historico ADD CONSTRAINT FK_htr_trm
-    FOREIGN KEY (hrt_trm)
-    REFERENCES trm_termo(trm_id);
 
 CREATE TABLE ccl_ciclo (
     ccl_id INT PRIMARY KEY,
@@ -67,22 +72,6 @@ CREATE TABLE emp_empreendimento (
     emp_zoneamento zoneamento_type
 );
 
-CREATE TABLE opr_operacao (
-    opr_id BIGINT PRIMARY KEY,
-    opr_inicio_plantio DATE,
-    opr_fim_plantio DATE,
-    opr_inicio_colheita DATE,
-    opr_fim_colheita DATE,
-    opr_std INT,
-    opr_mun BIGINT,
-    opr_sol INT,
-    opr_irg INT,
-    opr_clt INT,
-    opr_gsm INT,
-    opr_ccl INT,
-    opr_emp BIGINT
-);
-
 CREATE TABLE std_estado (
     std_id INT PRIMARY KEY,
     std_descricao VARCHAR(2)
@@ -92,48 +81,37 @@ CREATE TABLE mun_municipio (
     mun_id BIGINT PRIMARY KEY,
     mun_descricao VARCHAR(255)
 );
- 
-ALTER TABLE opr_operacao ADD CONSTRAINT FK_opr_sol
-    FOREIGN KEY (opr_sol)
-    REFERENCES sol_solo (sol_id);
- 
-ALTER TABLE opr_operacao ADD CONSTRAINT FK_opr_irg
-    FOREIGN KEY (opr_irg)
-    REFERENCES irg_irrigacao (irg_id);
- 
-ALTER TABLE opr_operacao ADD CONSTRAINT FK_opr_clt
-    FOREIGN KEY (opr_clt)
-    REFERENCES clt_cultivo (clt_id);
- 
-ALTER TABLE opr_operacao ADD CONSTRAINT FK_opr_gsm
-    FOREIGN KEY (opr_gsm)
-    REFERENCES gsm_grao_semente (gsm_id);
- 
-ALTER TABLE opr_operacao ADD CONSTRAINT FK_opr_ccl
-    FOREIGN KEY (opr_ccl)
-    REFERENCES ccl_ciclo (ccl_id);
- 
-ALTER TABLE opr_operacao ADD CONSTRAINT FK_opr_emp
-    FOREIGN KEY (opr_emp)
-    REFERENCES emp_empreendimento (emp_id);
 
-ALTER TABLE opr_operacao ADD CONSTRAINT FK_opr_std
-    FOREIGN KEY (opr_std)
-    REFERENCES std_estado (std_id);
-
-ALTER TABLE opr_operacao ADD CONSTRAINT FK_opr_mun
-    FOREIGN KEY (opr_mun)
-    REFERENCES mun_municipio (mun_id);
+CREATE TABLE opr_operacao (
+    opr_id BIGINT PRIMARY KEY,
+    opr_inicio_plantio DATE,
+    opr_fim_plantio DATE,
+    opr_inicio_colheita DATE,
+    opr_fim_colheita DATE,
+    std_id INT,
+    mun_id BIGINT,
+    sol_id INT,
+    irg_id INT,
+    clt_id INT,
+    gsm_id INT,
+    ccl_id INT,
+    emp_id BIGINT,
+	CONSTRAINT fk_std_id FOREIGN KEY(std_id) REFERENCES std_estado(std_id),
+	CONSTRAINT fk_mun_id FOREIGN KEY(mun_id) REFERENCES mun_municipio(mun_id),
+	CONSTRAINT fk_sol_id FOREIGN KEY(sol_id) REFERENCES sol_solo(sol_id),
+	CONSTRAINT fk_irg_id FOREIGN KEY(irg_id) REFERENCES irg_irrigacao(irg_id),
+	CONSTRAINT fk_clt_id FOREIGN KEY(clt_id) REFERENCES clt_cultivo(clt_id),
+	CONSTRAINT fk_gsm_id FOREIGN KEY(gsm_id) REFERENCES gsm_grao_semente(gsm_id),
+	CONSTRAINT fk_ccl_id FOREIGN KEY(ccl_id) REFERENCES ccl_ciclo(ccl_id),
+	CONSTRAINT fk_emp_id FOREIGN KEY(emp_id) REFERENCES emp_empreendimento(emp_id)
+);
 
 CREATE TABLE glb_gleba (
     glb_id SERIAL PRIMARY KEY,
     glb_poligono geometry(POLYGON,4326),
-    glb_opr BIGINT
+    opr_id BIGINT,
+	CONSTRAINT fk_opr_id FOREIGN KEY(opr_id) REFERENCES opr_operacao(opr_id)
 );
-
-ALTER TABLE glb_gleba ADD CONSTRAINT FK_glb_opr
-    FOREIGN KEY (glb_opr)
-    REFERENCES opr_operacao (opr_id);
 
 CREATE TABLE prp_propriedade (
     prp_id SERIAL PRIMARY KEY,
@@ -141,9 +119,7 @@ CREATE TABLE prp_propriedade (
     prp_sncr VARCHAR(255),
     prp_nirf VARCHAR(255),
     prp_car VARCHAR(255),
-    prp_opr BIGINT
+    opr_id BIGINT,
+	CONSTRAINT fk_opr_id FOREIGN KEY(opr_id) REFERENCES opr_operacao(opr_id)
 );
- 
-ALTER TABLE prp_propriedade ADD CONSTRAINT FK_prp_opr
-    FOREIGN KEY (prp_opr)
-    REFERENCES opr_operacao (opr_id);
+

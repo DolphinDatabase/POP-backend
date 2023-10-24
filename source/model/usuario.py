@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
 from database import Base
 
@@ -13,9 +13,8 @@ class Usuario(Base):
     email = Column('usr_email', String(255))
     senha = Column('usr_senha', String(255))
     permissao = Column('usr_permissao', Boolean)
-    adm = Column('usr_adm', Boolean, default=False)
 
-    # hashed_password = Column("usr_hashed_password", String)
-    # is_active = Column("usr_is_active", Boolean, default=True)
+    grupo_id = Column("grp_id", Integer, ForeignKey("grp_grupo.grp_id"))
+    grupo = relationship("Grupo", lazy="selectin")
 
     historico = relationship('Historico', back_populates="usuario", cascade='all, delete-orphan')

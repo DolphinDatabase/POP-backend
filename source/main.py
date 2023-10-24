@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 import controller
 import uvicorn
-from database import Base, engine
 from fastapi.middleware.cors import CORSMiddleware
 
 # Base.metadata.create_all(engine)
@@ -26,8 +25,10 @@ app.include_router(controller.historico_router)
 app.include_router(controller.gleba_router)
 app.include_router(controller.operacao_router)
 
+
 @app.get("/")
 def home():
     return "Funcionando"
 
-uvicorn.run(app=app, host="0.0.0.0",port=5050)
+
+uvicorn.run(app=app, host="0.0.0.0", port=5050)

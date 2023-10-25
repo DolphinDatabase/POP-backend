@@ -6,7 +6,7 @@ from database import engine, Base
 from model import Usuario
 from typing import Annotated
 from .auth_controller import get_current_user
-from .redis_cache.redis import cache_response
+from fastapi_redis_cache import cache_one_hour
 
 router = APIRouter(
     prefix="/operacao",
@@ -15,13 +15,13 @@ router = APIRouter(
 
 
 @router.get('/', response_model=list[schemas.Operacao])
-@cache_response(ttl=3600)
+@cache_one_hour()
 async def get_operacoes():
     return operacao_service.get_operacaos()
 
 
 @router.get('/{id}', response_model=schemas.Operacao)
-@cache_response(ttl=3600)
+@cache_one_hour()
 async def get(id: int):
     try:
         return operacao_service.get_operacao(id)

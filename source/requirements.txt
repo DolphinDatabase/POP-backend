@@ -35,3 +35,4 @@ wrapt==1.15.0
 redis
 fastapi_redis_cache
 fastapi_cache
+psycopg2

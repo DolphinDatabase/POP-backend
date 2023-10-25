@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from service import UsuarioService
 from schema import GetUsuario, CreateUsuario, UsuarioBase, CreateHistorico
-from .redis_cache.redis import cache_response
+from fastapi_redis_cache import cache_one_hour
 
 router = APIRouter(
     prefix='/usuario'
@@ -15,7 +15,7 @@ async def create(usuario: CreateUsuario):
 
 
 @router.get('/{id}', response_model=GetUsuario)
-@cache_response(ttl=3600)
+@cache_one_hour()
 async def get(id: int):
     try:
         return UsuarioService.get_usuario(id)

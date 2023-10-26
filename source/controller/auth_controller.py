@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from fastapi import Depends, FastAPI, HTTPException, status, APIRouter
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
-
+from fastapi_redis_cache import cache_one_hour
 from model import Token, Usuario
 from schema.usuario_schema import GetUsuario
 import service
@@ -76,6 +76,7 @@ async def login_for_access_token(
 
 
 @router.get("/", response_model=GetUsuario)
+@cache_one_hour()
 async def get_current(user: Annotated[Usuario, Depends(get_current_user)]):
     return user
 

@@ -1,10 +1,12 @@
-FROM python:3.11-bullseye
+FROM python:3.11-alpine
 
-COPY ./requirements.txt /pop-backend/requirements.txt
+# RUN pip install --no-cache-dir --upgrade pip
 
 WORKDIR /pop-backend
 
-RUN pip install -r ./requirements.txt
+COPY requirements.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /pop-backend/
 

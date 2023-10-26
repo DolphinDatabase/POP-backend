@@ -4,6 +4,7 @@ from schema import TermoBase, GetTermo
 from model import Usuario
 from typing import Annotated
 from .auth_controller import get_adm_user
+from fastapi_redis_cache import cache_one_hour
 
 router = APIRouter(
     prefix='/termo'
@@ -16,11 +17,13 @@ async def create(termo: TermoBase, user: Annotated[Usuario, Depends(get_adm_user
 
 
 @router.get('/', response_model=list[GetTermo])
+@cache_one_hour()
 async def index():
     return TermoService.index_termo()
 
 
 @router.get('/last')
+@cache_one_hour()
 async def last(proprietario: bool = False):
     try:
         return TermoService.get_last(proprietario)
@@ -29,6 +32,7 @@ async def last(proprietario: bool = False):
 
 
 @router.get('/{id}', response_model=GetTermo)
+@cache_one_hour()
 async def get(id: int):
     try:
         return TermoService.get_termo(id)

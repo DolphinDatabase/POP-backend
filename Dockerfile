@@ -1,13 +1,12 @@
 FROM python:3.11-bullseye
 
-COPY ./requirements.txt /pop-backend/requirements.txt
+COPY ./source /pop-backend
+COPY requirements.txt /pop-backend/requirements.txt
 
 WORKDIR /pop-backend
 
 RUN pip install -r ./requirements.txt
 
-COPY . /pop-backend/
+EXPOSE 5050
 
 CMD ["python", "main.py"]
-
-EXPOSE 5050

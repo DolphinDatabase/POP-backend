@@ -1,3 +1,58 @@
+-- Types
+
+CREATE TYPE finalidade_type AS ENUM (
+	'Custeio',
+	'Comercialização'
+);
+
+CREATE TYPE atividade_type AS ENUM (
+	'Agrícola'
+);
+
+CREATE TYPE modalidade_type AS ENUM (
+	'LAVOURA',
+	'BENEFICIAMENTO OU INDUSTRIALIZAÇÃO',
+	'FEPM (EX-EGF) - encerrado',
+	'FEE (EX-LEC)',
+	'PRÉ-COMERCIALIZAÇÃO - encerrado',
+	'DESCONTO (NPR E DR)',
+	'CPR (CÉDULA DE PRODUTO RURAL)',
+	'ESTOCAGEM',
+	'Aquisição de Matéria Prima direto do Produtor/Coop',
+	'FGPP-Financiamento para Garantia de Preços ao Prod',
+	'COVID-19 - Resolução 4801/2020',
+	'ESTIAGEM - Resolução 4802/2020',
+	'Financiamento para Aquisição da Produção/Materia P'
+);
+
+CREATE TYPE produto_type AS ENUM (
+	'SOJA'
+);
+
+CREATE TYPE variedade_type AS ENUM (
+	'NÃO SE APLICA',
+	'CULTIVO EM SISTEMAS INTEGRADOS',
+	'VARIEDADE',
+	'SEMENTE',
+	'FARELO',
+	'ÓLEO BRUTO DEGOMADO',
+	'EM GRÃOS',
+	'ÓLEO'
+);
+
+CREATE TYPE cesta_type AS ENUM (
+	'Irrigadas',
+	'Safra de Verão (1ª Safra)',
+	'Safrinha (2ª Safra)',
+	'Ano Civil / Ano de Exploração');
+
+CREATE TYPE zoneamento_type AS ENUM (
+	'Não zoneado',
+	'Zoneado'
+);
+
+-- Tables
+
 CREATE TABLE grp_grupo (
 	grp_id SERIAL PRIMARY KEY,
 	grp_descricao VARCHAR(150)
@@ -17,8 +72,9 @@ CREATE TABLE usr_usuario (
 CREATE TABLE trm_termo (
     trm_id SERIAL PRIMARY KEY,
     trm_data DATE,
-    trm_proprietario BOOLEAN,
-    trm_text TEXT
+    trm_text TEXT,
+	grp_id INT,
+	CONSTRAINT fk_grp_id FOREIGN KEY(grp_id) REFERENCES grp_grupo(grp_id)
 );
 
 CREATE TABLE trc_termo_condicao (
@@ -33,7 +89,7 @@ CREATE TABLE utr_usuario_termo (
 	trm_id INT,
 	utr_aceite BOOLEAN,
 	CONSTRAINT fk_usr_id FOREIGN KEY(usr_id) REFERENCES usr_usuario(usr_id),
-	CONSTRAINT fk_trm_id FOREIGN KEY(trm_id) REFERENCES trc_termo(trm_id)
+	CONSTRAINT fk_trm_id FOREIGN KEY(trm_id) REFERENCES trm_termo(trm_id)
 );
 
 CREATE TABLE utc_usuario_termo_condicao (

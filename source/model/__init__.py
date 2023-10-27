@@ -5,7 +5,6 @@ from .empreendimento import Empreendimento
 from .estado import Estado
 from .gleba import Gleba
 from .grao_semente import GraoSemente
-from .historico import Historico
 from .irrigacao import Irrigacao
 from .land import Land
 from .municipio import Municipio
@@ -24,7 +23,6 @@ __all__ = [
     "Estado",
     "Gleba",
     "GraoSemente",
-    "Historico",
     "Irrigacao",
     "Land",
     "Municipio",

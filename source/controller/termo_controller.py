@@ -20,7 +20,7 @@ async def index():
     return TermoService.index_termo()
 
 
-@router.get('/last')
+@router.get('/last', response_model=GetTermo)
 async def last(proprietario: bool = False):
     try:
         return TermoService.get_last(proprietario)

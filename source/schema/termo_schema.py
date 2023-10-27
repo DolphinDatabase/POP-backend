@@ -1,21 +1,26 @@
 from pydantic import BaseModel
-from datetime import date
+from datetime import datetime
 from typing import List
 
 
 class CondicaoBase(BaseModel):
-    param: str
+    texto: str
 
 
 class TermoBase(BaseModel):
-    text: str
+    texto: str
     grupo: str
-    terms: List[CondicaoBase]
+    condicoes: List[CondicaoBase]
 
     class Config:
         orm_mode = True
 
 
+class GetCondicao(CondicaoBase):
+    id: int
+
+
 class GetTermo(TermoBase):
     id: int
-    data: date
+    data: datetime
+    condicoes: List[GetCondicao]

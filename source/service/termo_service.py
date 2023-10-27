@@ -7,36 +7,46 @@ from sqlalchemy import func
 
 class TermoService:
     @staticmethod
-    def create_termo(termo: TermoBase):
+    def create_termo(novo_termo: TermoBase):
         with SessionLocal() as db:
-            grupo_id = db.query(int).filter(termo.grupo == Grupo.descricao)
+            grupo = db.query(Grupo).filter(novo_termo.grupo == Grupo.descricao).first()
 
-            termo_obj = Termo(data=datetime.now(),
-                              grupo_id=grupo_id,
-                              text=termo.text)
+            termo = Termo(data=datetime.now(),
+                          grupo_id=grupo.id,
+                          texto=novo_termo.texto)
 
-            for condicao in termo.terms:
-                condicao = Condicao(texto=condicao.param)
-                termo_obj.condicoes.append()
+            for condicao in novo_termo.condicoes:
+                condicao = Condicao(texto=condicao.texto)
+                termo.condicoes.append(condicao)
 
-            db.add(termo_obj)
+            db.add(termo)
             db.commit()
-            db.refresh(termo_obj)
-        return termo_obj
+            db.refresh(termo)
+
+        termo.grupo = termo.grupo.descricao
+
+        return termo
 
     @staticmethod
     def index_termo():
         with SessionLocal() as db:
             termos = db.query(Termo).all()
+
+            for termo in termos:
+                termo.grupo = termo.grupo.descricao
+
         return termos
 
     @staticmethod
     def get_termo(id: int):
         with SessionLocal() as db:
-            termo = db.query(Termo).where(Termo.id == id)
+            termo = db.query(Termo).where(Termo.id == id).first()
 
         if termo is None:
             raise Exception(404, 'Termo not found')
+
+        termo.grupo = termo.grupo.descricao
+
         return termo
 
     @staticmethod
@@ -46,29 +56,31 @@ class TermoService:
 
         if termo is None:
             raise Exception(404, 'Termo not found')
+
         return termo
 
     @staticmethod
-    def update_termo(id: int, termo: TermoBase):
+    def update_termo(id: int, novo_termo: TermoBase):
         with SessionLocal() as db:
-            t = db.query(Termo).where(Termo.id == id).first()
-            if t is None:
+            termo = db.query(Termo).where(Termo.id == id).first()
+            if termo is None:
                 db.close()
                 raise Exception(404, 'Termo not found')
-            t.text = termo.text
-            t.proprietario = termo.proprietario
-            t.data = date.today()
-            db.add(t)
+            termo.texto = novo_termo.text
+            termo.proprietario = novo_termo.proprietario
+            termo.data = datetime.now()
+            db.add(termo)
             db.commit()
-            db.refresh(t)
-        return t
+            db.refresh(termo)
+
+        return termo
 
     @staticmethod
     def delete_termo(id: int):
         with SessionLocal() as db:
-            t = db.query(Termo).where(Termo.id == id).first()
-            if t is None:
+            termo = db.query(Termo).where(Termo.id == id).first()
+            if termo is None:
                 db.close()
                 raise Exception()
-            db.delete(t)
+            db.delete(termo)
             db.commit()

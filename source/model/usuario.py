@@ -16,5 +16,3 @@ class Usuario(Base):
 
     grupo_id = Column("grp_id", Integer, ForeignKey("grp_grupo.grp_id"))
     grupo = relationship("Grupo", lazy="selectin")
-
-    historico = relationship('Historico', back_populates="usuario", cascade='all, delete-orphan')

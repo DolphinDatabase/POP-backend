@@ -1,7 +1,6 @@
 from database import SessionLocal
 from model import Usuario
-from schema import CreateUsuario, UsuarioBase, CreateHistorico
-from .historico_service import HistoricoService
+from schema import CreateUsuario, UsuarioBase
 from .termo_service import TermoService
 import crypt
 
@@ -23,7 +22,6 @@ class UsuarioService:
         db.close()
         if not usuario.adm:
             t = TermoService.get_last(usuario.proprietario)
-            HistoricoService.create_historico(CreateHistorico(usuario=u.id, termo=t.id))
         return u
 
     @staticmethod
@@ -51,7 +49,6 @@ class UsuarioService:
             db.close()
             raise Exception(401, 'Usuario already sign')
         t = TermoService.get_last(u.proprietario)
-        HistoricoService.create_historico(CreateHistorico(usuario=u.id, termo=t.id))
         u.permissao = True
         db.add(u)
         db.commit()

@@ -71,7 +71,7 @@ CREATE TABLE usr_usuario (
 
 CREATE TABLE trm_termo (
     trm_id SERIAL PRIMARY KEY,
-    trm_data DATE,
+    trm_data TIMESTAMP WITHOUT TIME ZONE,
     trm_text TEXT,
 	grp_id INT,
 	CONSTRAINT fk_grp_id FOREIGN KEY(grp_id) REFERENCES grp_grupo(grp_id)

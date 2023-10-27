@@ -11,7 +11,7 @@ router = APIRouter(
 
 
 @router.post('/', response_model=GetTermo)
-async def create(termo: TermoBase, user: Annotated[Usuario, Depends(get_adm_user)]):
+async def create(termo: TermoBase):#, user: Annotated[Usuario, Depends(get_adm_user)]):
     return TermoService.create_termo(termo)
 
 
@@ -40,7 +40,7 @@ async def get(id: int):
 async def update(id: int, termo: TermoBase, user: Annotated[Usuario, Depends(get_adm_user)]):
     try:
         return TermoService.update_termo(id, termo)
-    except:
+    except Exception:
         raise HTTPException(404)
 
 
@@ -48,5 +48,5 @@ async def update(id: int, termo: TermoBase, user: Annotated[Usuario, Depends(get
 async def delete(id: int, user: Annotated[Usuario, Depends(get_adm_user)]):
     try:
         TermoService.delete_termo(id)
-    except:
+    except Exception:
         raise HTTPException(404)

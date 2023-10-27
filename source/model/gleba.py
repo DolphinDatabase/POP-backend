@@ -20,4 +20,3 @@ class Gleba(Base):
         plg = shapely.geometry.mapping(to_shape(self._poligono))
         plg['coordinates'] = [item for item in plg['coordinates'] if item is not None]
         return {'type': 'Feature', 'geometry': plg}
-

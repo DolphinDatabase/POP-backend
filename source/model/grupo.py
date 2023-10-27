@@ -1,5 +1,12 @@
 from sqlalchemy import Column, Integer, String
 from database import Base
+from enum import Enum
+
+
+class GrupoTipo(Enum):
+    ADMINISTRADOR = "administrador"
+    PROPRIETARIO = "proprietario"
+    OPERADOR = "operador"
 
 
 class Grupo(Base):

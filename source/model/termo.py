@@ -12,6 +12,9 @@ class Termo(Base):
     proprietario = Column('trm_proprietario', Boolean)
     text = Column('trm_text', String)
 
+    grupo_id = Column('grp_id', Integer, ForeignKey('grp_grupo.grp_id'))
+    grupo = relationship("Grupo", lazy="selectin")
+
     condicoes: Mapped[List["Condicao"]] = relationship("Condicao", lazy="selectin")
 
 

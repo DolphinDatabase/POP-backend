@@ -3,3 +3,11 @@ from .termo_controller import router as termo_router
 from .usuario_controller import router as usuario_router
 from .gleba_controller import router as gleba_router
 from .operacao_controller import router as operacao_router
+
+__all__ = [
+    "auth_router",
+    "termo_router",
+    "usuario_router",
+    "gleba_router",
+    "operacao_router"
+]

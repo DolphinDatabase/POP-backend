@@ -53,28 +53,21 @@ CREATE TYPE zoneamento_type AS ENUM (
 
 -- Tables
 
-CREATE TABLE grp_grupo (
-	grp_id SERIAL PRIMARY KEY,
-	grp_descricao VARCHAR(150)
-);
-
 CREATE TABLE usr_usuario (
     usr_id SERIAL PRIMARY KEY,
     usr_nome VARCHAR(150),
     usr_doc VARCHAR(14),
     usr_email VARCHAR(255),
     usr_senha VARCHAR(255),
-    usr_permissao BOOLEAN,
+	usr_grupo VARCHAR(10),
 	grp_id INT,
-	CONSTRAINT fk_grp_id FOREIGN KEY(grp_id) REFERENCES grp_grupo(grp_id)
 );
 
 CREATE TABLE trm_termo (
     trm_id SERIAL PRIMARY KEY,
     trm_data TIMESTAMP WITHOUT TIME ZONE,
     trm_text TEXT,
-	grp_id INT,
-	CONSTRAINT fk_grp_id FOREIGN KEY(grp_id) REFERENCES grp_grupo(grp_id)
+	trm_grupo VARCHAR(25)
 );
 
 CREATE TABLE trc_termo_condicao (

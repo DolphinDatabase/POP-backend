@@ -17,4 +17,3 @@ class Empreendimento(Base):
     zoneamento = Column("emp_zoneamento", String, index=True)
 
     operacoes = relationship("Operacao", back_populates="empreendimento")
-

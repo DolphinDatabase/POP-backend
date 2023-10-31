@@ -1,4 +1,4 @@
-from pydantic import BaseModel, datetime_parse
+from pydantic import BaseModel
 from datetime import date
 
 
@@ -87,7 +87,7 @@ class Operacao(BaseModel):
 
 
 class Coordinates(BaseModel):
-    coordinates: tuple[tuple[float,float]]
+    coordinates: tuple[tuple[float, float]]
 
 
 class Geometry(BaseModel):

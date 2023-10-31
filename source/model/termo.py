@@ -10,9 +10,7 @@ class Termo(Base):
     id = Column('trm_id', Integer, primary_key=True, index=True)
     data = Column('trm_data', DateTime)
     texto = Column('trm_text', String)
-
-    grupo_id = Column('grp_id', Integer, ForeignKey('grp_grupo.grp_id'))
-    grupo = relationship("Grupo", lazy="selectin")
+    grupo = Column('grp_id', String)
 
     condicoes: Mapped[List["Condicao"]] = relationship("Condicao", lazy="selectin")
 

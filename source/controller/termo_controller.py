@@ -28,25 +28,10 @@ async def last(proprietario: bool = False):
         raise HTTPException(status_code=e.args[0], detail=e.args[1])
 
 
+# TODO: Rota de listagem dos termos
 @router.get('/{id}', response_model=GetTermo)
 async def get(id: int):
     try:
         return TermoService.get_termo(id)
     except Exception as e:
         raise HTTPException(status_code=e.args[0], detail=e.args[1])
-
-
-@router.put('/{id}', response_model=GetTermo)
-async def update(id: int, termo: TermoBase, user: Annotated[Usuario, Depends(get_adm_user)]):
-    try:
-        return TermoService.update_termo(id, termo)
-    except Exception:
-        raise HTTPException(404)
-
-
-@router.delete('/{id}')
-async def delete(id: int, user: Annotated[Usuario, Depends(get_adm_user)]):
-    try:
-        TermoService.delete_termo(id)
-    except Exception:
-        raise HTTPException(404)

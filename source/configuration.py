@@ -10,3 +10,4 @@ DATABASE_URL = os.getenv("DATABASE_URL",
 # DATABASE_URL = os.getenv("DATABASE_URL",
 #                          "postgresql://postgres:admin@localhost:5432/postgres")
 LOCAL_REDIS_URL = os.environ.get("REDIS_URL", "redis://127.0.0.1:6379") 
+LOCAL_CASSANDRA_URL = os.environ.get("CASSANDRA_URL", "localhost")

@@ -37,7 +37,7 @@ def home():
 
 @app.on_event("startup")
 def startup():
-    cluster = Cluster(['localhost'])
+    cluster = Cluster([configuration.LOCAL_CASSANDRA_URL])
     session = cluster.connect()
 
     keyspace_query = "SELECT keyspace_name FROM system_schema.keyspaces WHERE keyspace_name = 'prediction'"

@@ -35,8 +35,12 @@ class Operacao(Base):
     ciclo_id = Column("ccl_id", Integer, ForeignKey("ccl_ciclo.ccl_id"))
     ciclo = relationship("Ciclo", lazy="selectin")
 
-    empreendimento_id = Column("emp_id", Integer, ForeignKey("emp_empreendimento.emp_id"))
+    empreendimento_id = Column(
+        "emp_id", Integer, ForeignKey("emp_empreendimento.emp_id")
+    )
     empreendimento = relationship("Empreendimento", lazy="selectin")
 
     gleba = relationship("Gleba", back_populates="operacao", lazy="selectin")
-    propriedade = relationship("Propriedade", back_populates="operacao", lazy="selectin")
+    propriedade = relationship(
+        "Propriedade", back_populates="operacao", lazy="selectin"
+    )

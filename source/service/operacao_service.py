@@ -13,4 +13,3 @@ def get_operacao(id: int):
         if operacao is None:
             raise Exception()
         return operacao
-

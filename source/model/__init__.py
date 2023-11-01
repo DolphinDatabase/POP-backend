@@ -32,5 +32,5 @@ __all__ = [
     "Usuario",
     "Grupo",
     "Condicao",
-    "Servico"
+    "Servico",
 ]

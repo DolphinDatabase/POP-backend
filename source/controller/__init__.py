@@ -10,5 +10,5 @@ __all__ = [
     "termo_router",
     "usuario_router",
     "gleba_router",
-    "operacao_router"
+    "operacao_router",
 ]

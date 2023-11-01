@@ -9,8 +9,10 @@ import crypt
 class UsuarioService:
     @staticmethod
     def create_usuario(novo_usuario: CreateUsuario) -> Usuario:
-        with (SessionLocal() as db):
-            usuario = db.query(Usuario).where(Usuario.email == novo_usuario.email).first()
+        with SessionLocal() as db:
+            usuario = (
+                db.query(Usuario).where(Usuario.email == novo_usuario.email).first()
+            )
 
             if usuario is None:
                 usuario_is_admin = novo_usuario.grupo == Grupo.ADMINISTRADOR.value
@@ -39,8 +41,10 @@ class UsuarioService:
 
     @staticmethod
     def update_usuario(novo_usuario: BaseUsuario) -> Usuario:
-        with (SessionLocal() as db):
-            usuario = db.query(Usuario).where(Usuario.email == novo_usuario.email).first()
+        with SessionLocal() as db:
+            usuario = (
+                db.query(Usuario).where(Usuario.email == novo_usuario.email).first()
+            )
 
             if usuario is None:
                 raise object_not_found_exception
@@ -58,7 +62,7 @@ class UsuarioService:
 
     @staticmethod
     def delete_usuario(usuario: Usuario) -> Usuario:
-        with (SessionLocal() as db):
+        with SessionLocal() as db:
             usuario = db.query(Usuario).where(Usuario.email == usuario.email).first()
 
             if usuario is None:
@@ -68,3 +72,11 @@ class UsuarioService:
             db.commit()
 
         return usuario
+
+    @staticmethod
+    def get_all():
+        db = SessionLocal()
+        u = db.query(Usuario.email).all()
+        if u is None:
+            raise Exception(404, "Table is empty")
+        return u

@@ -10,16 +10,14 @@ from cassandra.cluster import Cluster
 # Base.metadata.create_all(engine)
 
 app = FastAPI()
-origins = [
-    "*"
-]
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"], 
+    allow_headers=["*"],
 )
 
 app.include_router(controller.termo_router)
@@ -33,6 +31,7 @@ app.include_router(controller.predicrion_router)
 @app.get("/")
 def home():
     return "Funcionando"
+
 
 @app.on_event("startup")
 def startup():
@@ -69,10 +68,11 @@ def startup():
     session.shutdown()
     redis_cache = FastApiRedisCache()
     redis_cache.init(
-        host_url= configuration.LOCAL_REDIS_URL,
+        host_url=configuration.LOCAL_REDIS_URL,
         prefix="myapi-cache",
         response_header="X-MyAPI-Cache",
-        ignore_arg_types=[Request, Response, Session]
+        ignore_arg_types=[Request, Response, Session],
     )
 
-uvicorn.run(app=app, host="0.0.0.0",port=5050)
+
+uvicorn.run(app=app, host="0.0.0.0", port=5050)

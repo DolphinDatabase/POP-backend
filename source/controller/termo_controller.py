@@ -9,12 +9,10 @@ from .auth_controller import auth_service
 from .exceptions import validation_error
 from fastapi_redis_cache import cache_one_hour
 
-router = APIRouter(
-    prefix='/termo'
-)
+router = APIRouter(prefix="/termo")
 
 
-@router.get('/')
+@router.get("/")
 @cache_one_hour()
 async def get(user: Annotated[Usuario, Depends(auth_service.get_authenticated_user)]):
     if user.grupo == Grupo.ADMINISTRADOR.value:
@@ -23,9 +21,12 @@ async def get(user: Annotated[Usuario, Depends(auth_service.get_authenticated_us
     return TermoService.get_last_termo_aceite(user)
 
 
-@router.post('/')
+@router.post("/")
 @cache_one_hour()
-async def post(termo: BaseTermo | AcceptTermo, user: Annotated[Usuario, Depends(auth_service.get_authenticated_user)]):
+async def post(
+    termo: BaseTermo | AcceptTermo,
+    user: Annotated[Usuario, Depends(auth_service.get_authenticated_user)],
+):
     try:
         if user.grupo == Grupo.ADMINISTRADOR.value:
             termo = BaseTermo.model_validate(termo)

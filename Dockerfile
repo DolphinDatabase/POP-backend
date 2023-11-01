@@ -1,6 +1,7 @@
 FROM python:3.11-alpine
 
-# RUN pip install --no-cache-dir --upgrade pip
+COPY ./source /pop-backend
+COPY requirements.txt /pop-backend/requirements.txt
 
 WORKDIR /pop-backend
 
@@ -8,8 +9,6 @@ COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . /pop-backend/
+EXPOSE 5050
 
 CMD ["python", "main.py"]
-
-EXPOSE 5050

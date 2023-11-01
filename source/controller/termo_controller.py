@@ -1,9 +1,12 @@
 from fastapi import APIRouter, HTTPException, Depends
+from pydantic import ValidationError
+
 from service import TermoService
-from schema import TermoBase, GetTermo
-from model import Usuario
+from schema import BaseTermo, GetTermo, AcceptTermo
+from model import Usuario, Grupo
 from typing import Annotated
-from .auth_controller import get_adm_user
+from .auth_controller import auth_service
+from .exceptions import validation_error
 from fastapi_redis_cache import cache_one_hour
 
 router = APIRouter(
@@ -11,46 +14,24 @@ router = APIRouter(
 )
 
 
-@router.post('/', response_model=GetTermo)
-async def create(termo: TermoBase, user: Annotated[Usuario, Depends(get_adm_user)]):
-    return TermoService.create_termo(termo)
-
-
-@router.get('/', response_model=list[GetTermo])
+@router.get('/')
 @cache_one_hour()
-async def index():
-    return TermoService.index_termo()
+async def get(user: Annotated[Usuario, Depends(auth_service.get_authenticated_user)]):
+    if user.grupo == Grupo.ADMINISTRADOR.value:
+        termos = TermoService.list_termo()
+        return {"termos": termos}
+    return TermoService.get_last_termo_aceite(user)
 
 
-@router.get('/last')
+@router.post('/')
 @cache_one_hour()
-async def last(proprietario: bool = False):
+async def post(termo: BaseTermo | AcceptTermo, user: Annotated[Usuario, Depends(auth_service.get_authenticated_user)]):
     try:
-        return TermoService.get_last(proprietario)
-    except Exception as e:
-        raise HTTPException(status_code=e.args[0], detail=e.args[1])
+        if user.grupo == Grupo.ADMINISTRADOR.value:
+            termo = BaseTermo.model_validate(termo)
+            return TermoService.create_termo(termo)
 
-
-@router.get('/{id}', response_model=GetTermo)
-@cache_one_hour()
-async def get(id: int):
-    try:
-        return TermoService.get_termo(id)
-    except Exception as e:
-        raise HTTPException(status_code=e.args[0], detail=e.args[1])
-
-
-@router.put('/{id}', response_model=GetTermo)
-async def update(id: int, termo: TermoBase, user: Annotated[Usuario, Depends(get_adm_user)]):
-    try:
-        return TermoService.update_termo(id, termo)
-    except:
-        raise HTTPException(404)
-
-
-@router.delete('/{id}')
-async def delete(id: int, user: Annotated[Usuario, Depends(get_adm_user)]):
-    try:
-        TermoService.delete_termo(id)
-    except:
-        raise HTTPException(404)
+        termo = AcceptTermo.model_validate(termo)
+        return TermoService.accept_termo(user, termo)
+    except ValidationError:
+        raise validation_error

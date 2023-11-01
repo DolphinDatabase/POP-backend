@@ -12,5 +12,5 @@ class Propriedade(Base):
     nirf = Column("ppr_nirf", String, index=True)
     car = Column("ppr_car", String, index=True)
 
-    operacao_id = Column("ppr_opr", Integer, ForeignKey("opr_operacao.opr_id"))
+    operacao_id = Column("opr_id", Integer, ForeignKey("opr_operacao.opr_id"))
     operacao = relationship("Operacao", back_populates="propriedade")

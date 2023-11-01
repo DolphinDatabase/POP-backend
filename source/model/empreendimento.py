@@ -4,7 +4,6 @@ from sqlalchemy.orm import relationship
 from database import Base
 
 
-
 class Empreendimento(Base):
     __tablename__ = "emp_empreendimento"
 

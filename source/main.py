@@ -2,7 +2,6 @@ from fastapi import FastAPI, Request, Response
 from sqlalchemy.orm import Session
 import controller
 import uvicorn
-from database import Base, engine
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi_redis_cache import FastApiRedisCache, cache
 import configuration
@@ -26,10 +25,10 @@ app.add_middleware(
 app.include_router(controller.termo_router)
 app.include_router(controller.auth_router)
 app.include_router(controller.usuario_router)
-app.include_router(controller.historico_router)
 app.include_router(controller.gleba_router)
 app.include_router(controller.operacao_router)
 app.include_router(controller.predicrion_router)
+
 
 @app.get("/")
 def home():

@@ -43,7 +43,7 @@ def startup():
                 id_municipio INT,
                 data_id UUID,
                 valor_indice FLOAT,
-                data TEXT,
+                data DATE,
                 PRIMARY KEY (id_municipio, data_id)
             ) WITH CLUSTERING ORDER BY (data_id ASC);
         """

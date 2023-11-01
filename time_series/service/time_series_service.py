@@ -19,7 +19,7 @@ def predict_mun(gleba:int):
 def get_time_series(gleba:int,inicio:str,fim:str):
     cluster = Cluster(['localhost'])
     session = cluster.connect('prediction')
-    query = f'SELECT * FROM data_series WHERE id_municipio={gleba}'
+    query = f"SELECT * FROM data_series WHERE id_municipio={gleba} AND data > '{inicio}' AND data < '{fim}' ALLOW FILTERING"
     rows = session.execute(query)
     data_series_list = [{"date":row.data,"data":row.valor_indice} for row in rows]
     if len(data_series_list) > 0:
@@ -27,9 +27,7 @@ def get_time_series(gleba:int,inicio:str,fim:str):
         df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d')
         df = df.set_index('date')
         df = df.groupby(df.index).mean()
-        df = df.asfreq("W",method='backfill')
         df = df.sort_index()
-        df = df.loc[datetime.strptime(inicio, "%Y-%m-%d"):datetime.strptime(fim, "%Y-%m-%d")]
         session.shutdown()
         cluster.shutdown()
         return json.loads(df.to_json())

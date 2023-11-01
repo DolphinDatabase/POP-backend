@@ -1,11 +1,11 @@
 from fastapi import Depends, HTTPException, APIRouter
 from service import gleba_service
 from schema import schemas
-from .auth_controller import get_current_user
+from .auth_controller import auth_service
 
 router = APIRouter(
     prefix="/gleba",
-    dependencies=[Depends(get_current_user)]
+    dependencies=[Depends(auth_service.get_active_user)]
 )
 
 
@@ -24,9 +24,9 @@ async def get_glebas(skip: int = 0, limit: int = 100):
     return gleba_service.get_glebas(skip, limit)
 
 
-@router.get('/{id}', response_model=schemas.Feature)
-async def get(id: int):
+@router.get('/{gleba_id}', response_model=schemas.Feature)
+async def get(gleba_id: int):
     try:
-        return gleba_service.get_gleba(id)
+        return gleba_service.get_gleba(gleba_id)
     except Exception:
         raise HTTPException(404)

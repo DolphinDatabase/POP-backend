@@ -2,11 +2,11 @@
 from fastapi import Depends, APIRouter, HTTPException
 from service import operacao_service
 from schema import schemas
-from .auth_controller import get_current_user
+from .auth_controller import auth_service
 
 router = APIRouter(
     prefix="/operacao",
-    dependencies=[Depends(get_current_user)]
+    dependencies=[Depends(auth_service.get_active_user)]
 )
 
 
@@ -15,9 +15,9 @@ async def get_operacoes():
     return operacao_service.get_operacaos()
 
 
-@router.get('/{id}', response_model=schemas.Operacao)
-async def get(id: int):
+@router.get('/{operacao_id}', response_model=schemas.Operacao)
+async def get(operacao_id: int):
     try:
-        return operacao_service.get_operacao(id)
+        return operacao_service.get_operacao(operacao_id)
     except Exception:
         raise HTTPException(404)

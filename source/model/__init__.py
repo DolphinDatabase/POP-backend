@@ -1,4 +1,3 @@
-from .api import Token
 from .ciclo import Ciclo
 from .cultivo import Cultivo
 from .empreendimento import Empreendimento
@@ -14,9 +13,9 @@ from .solo import Solo
 from .termo import Termo, Condicao
 from .usuario import Usuario
 from .grupo import Grupo
+from .servico import Servico
 
 __all__ = [
-    "Token",
     "Ciclo",
     "Cultivo",
     "Empreendimento",
@@ -32,5 +31,6 @@ __all__ = [
     "Termo",
     "Usuario",
     "Grupo",
-    "Condicao"
+    "Condicao",
+    "Servico"
 ]

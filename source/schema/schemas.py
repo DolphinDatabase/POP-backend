@@ -14,42 +14,42 @@ class Propriedade(BaseModel):
     operacao_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class Solo(BaseModel):
     descricao: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class Irrigacao(BaseModel):
     descricao: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class Cultivo(BaseModel):
     descricao: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class GraoSemente(BaseModel):
     descricao: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class Ciclo(BaseModel):
     descricao: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class Empreendimento(BaseModel):
@@ -62,7 +62,7 @@ class Empreendimento(BaseModel):
     zoneamento: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class Operacao(BaseModel):
@@ -83,7 +83,7 @@ class Operacao(BaseModel):
     propriedades: list[Propriedade] = []
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class Coordinates(BaseModel):
@@ -116,11 +116,4 @@ class Gleba(BaseModel):
     poligono: Feature
 
     class Config:
-        orm_mode = True
-
-
-class Empreendimento(BaseModel):
-    operacoes: list[Operacao] = []
-
-    class Config:
-        orm_mode = True
+        from_attributes = True

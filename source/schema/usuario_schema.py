@@ -2,19 +2,19 @@ from pydantic import BaseModel
 from model import Grupo
 
 
-class UsuarioBase(BaseModel):
+class BaseUsuario(BaseModel):
     nome: str
     doc: str
     email: str
     grupo: Grupo
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
-class GetUsuario(UsuarioBase):
+class GetUsuario(BaseUsuario):
     id: int
 
 
-class CreateUsuario(UsuarioBase):
+class CreateUsuario(BaseUsuario):
     senha: str

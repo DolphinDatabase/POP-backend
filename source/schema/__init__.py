@@ -1,10 +1,14 @@
-from .termo_schema import TermoBase, GetTermo
-from .usuario_schema import UsuarioBase, GetUsuario, CreateUsuario
+from .termo_schema import BaseTermo, GetTermo, AcceptTermo
+from .usuario_schema import BaseUsuario, GetUsuario, CreateUsuario
+from .api import Token, TokenData
 
 __all__ = [
-    "TermoBase",
+    "Token",
+    "TokenData",
+    "BaseTermo",
     "GetTermo",
-    "UsuarioBase",
+    "AcceptTermo",
+    "BaseUsuario",
     "GetUsuario",
     "CreateUsuario"
 ]

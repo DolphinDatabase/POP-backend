@@ -57,10 +57,10 @@ CREATE TABLE usr_usuario (
     usr_id SERIAL PRIMARY KEY,
     usr_nome VARCHAR(150),
     usr_doc VARCHAR(14),
-    usr_email VARCHAR(255),
+    usr_email VARCHAR(255) UNIQUE,
     usr_senha VARCHAR(255),
-	usr_grupo VARCHAR(10),
-	grp_id INT,
+	usr_grupo VARCHAR(25),
+	usr_ativo BOOLEAN
 );
 
 CREATE TABLE trm_termo (
@@ -74,6 +74,7 @@ CREATE TABLE trc_termo_condicao (
 	trc_id SERIAL PRIMARY KEY,
 	trm_id INT,
 	trc_texto TEXT,
+	trc_servico VARCHAR(255),
 	CONSTRAINT fk_trm_id FOREIGN KEY(trm_id) REFERENCES trm_termo(trm_id)
 );
 

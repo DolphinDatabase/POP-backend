@@ -1,5 +1,6 @@
-from .time_series_service import predict_mun
+from .time_series_service import predict_mun, get_time_series
 
 __all__ = [
-    'predict_mun'
+    'predict_mun',
+    'get_time_series'
 ]

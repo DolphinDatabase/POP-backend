@@ -1,15 +1,15 @@
 version: "3.1"
 
 services:
-  api:
-    container_name: api
-    build:
-      context: .
-      dockerfile: Dockerfile
-    environment:
-      DATABASE_URL: postgresql://pop:pop@database:5432/pop
-    ports:
-      - 5050:5050
+#  api:
+#    container_name: api
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    environment:
+#      DATABASE_URL: postgresql://pop:pop@database:5432/pop
+#    ports:
+#      - "5050:5050"
 
   database:
     container_name: database
@@ -22,13 +22,13 @@ services:
       - ./ddl/schema.sql:/docker-entrypoint-initdb.d/1-schema.sql
       - ./ddl/test-data.sql:/docker-entrypoint-initdb.d/2-data.sql
     ports:
-      - 5432:5432
+      - "5432:5432"
 
   adminer:
     container_name: adminer
     image: adminer
     ports:
-      - 8080:8080
+      - "8080:8080"
 
   redis-cache:
     image: redis:alpine
@@ -36,12 +36,12 @@ services:
     container_name: redis-cache
     restart: on-failure
     ports:
-      - '6379:6379'
+      - "6379:6379"
     command: redis-server
   
-  mycassandra:
+  cassandra:
     image: cassandra
-    container_name: mycassandra
+    container_name: cassandra
     ports:
       - "9042:9042"
       - "7000:7000"

@@ -124,3 +124,15 @@ class TermoService:
             db.commit()
 
         return novo_termo_aceite
+
+    @staticmethod
+    def get_last_termo_by_grupo(grupo: Grupo) -> Termo:
+        with SessionLocal() as db:
+            termo = (
+                db.query(Termo)
+                .where(Termo.grupo == grupo.value)
+                .order_by(desc(Termo.data))
+                .first()
+            )
+
+        return termo

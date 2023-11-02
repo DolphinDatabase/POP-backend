@@ -73,10 +73,3 @@ class UsuarioService:
 
         return usuario
 
-    @staticmethod
-    def get_usuario_by_grupo(grupo: Grupo):
-        db = SessionLocal()
-        users = db.query(Usuario).where(Usuario.grupo == grupo).all()
-        if users is None:
-            raise Exception(404, "Table is empty")
-        return users

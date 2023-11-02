@@ -44,13 +44,14 @@ def get_authenticated_user(token: Annotated[str, Depends(oauth2_scheme)]) -> Usu
 
 
 def get_active_user(user: Annotated[Usuario, Depends(get_authenticated_user)]):
-    if not user.ativo or not TermoService.get_last_termo_aceite(user).aceite:
+    if ((not user.ativo or not TermoService.get_last_termo_aceite(user).aceite)
+            and user.grupo is not Grupo.ADMINISTRADOR.value):
         raise requires_accept_exception
 
     return user
 
 
-def get_adm_user(user: Annotated[Usuario, Depends(get_authenticated_user)]):
+def get_adm_user(user: Annotated[Usuario, Depends(get_active_user)]):
     if user.grupo != Grupo.ADMINISTRADOR.value:
         raise role_exception
 

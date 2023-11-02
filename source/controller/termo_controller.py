@@ -13,7 +13,6 @@ router = APIRouter(prefix="/termo")
 
 
 @router.get("/")
-@cache_one_hour()
 async def get(user: Annotated[Usuario, Depends(auth_service.get_authenticated_user)]):
     if user.grupo == Grupo.ADMINISTRADOR.value:
         termos = TermoService.list_termo()
@@ -21,20 +20,19 @@ async def get(user: Annotated[Usuario, Depends(auth_service.get_authenticated_us
     return TermoService.get_last_termo_aceite(user)
 
 
-@router.post("/")
-@cache_one_hour()
+@router.post("/", response_model=GetTermo)
 async def post(
-    termo: BaseTermo | AcceptTermo,
-    user: Annotated[Usuario, Depends(auth_service.get_authenticated_user)],
+    termo: BaseTermo,
+    user: Annotated[Usuario, Depends(auth_service.get_adm_user)],
 ):
-    try:
-        if user.grupo == Grupo.ADMINISTRADOR.value:
-            termo = BaseTermo.model_validate(termo)
-            termo_criado = TermoService.create_termo(termo)
-            Thread(target=EmailService)
-            return termo_criado
-            
-        termo = AcceptTermo.model_validate(termo)
-        return TermoService.accept_termo(user, termo)
-    except ValidationError:
-        raise validation_error
+    termo_criado = TermoService.create_termo(termo)
+    EmailService().notify_group(termo.grupo)
+    return termo_criado
+
+
+@router.put("/", response_model=AcceptTermo)
+async def put(
+        termo: AcceptTermo,
+        user: Annotated[Usuario, Depends(auth_service.get_authenticated_user)],
+):
+    return TermoService.accept_termo(user, termo)

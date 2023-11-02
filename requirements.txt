@@ -10,7 +10,6 @@ pydantic~=2.4.2
 redis
 fastapi_redis_cache
 fastapi_cache
-psycopg2
 cassandra-driver
 joblib
 pandas

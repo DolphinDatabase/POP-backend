@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Table, Boo
 from sqlalchemy.orm import relationship, Mapped
 from database import Base
 from typing import List
+from .aceite import CondicaoAceite, TermoAceite
 
 
 class Condicao(Base):
@@ -13,6 +14,8 @@ class Condicao(Base):
 
     termo_id = Column("trm_id", Integer, ForeignKey("trm_termo.trm_id"))
 
+    aceites: Mapped[List[CondicaoAceite]] = relationship("CondicaoAceite", lazy="selectin")
+
 
 class Termo(Base):
     __tablename__ = "trm_termo"
@@ -21,5 +24,7 @@ class Termo(Base):
     data = Column("trm_data", DateTime)
     texto = Column("trm_text", String)
     grupo = Column("trm_grupo", String)
+
+    aceites: Mapped[List[TermoAceite]] = relationship("TermoAceite", lazy="selectin")
 
     condicoes: Mapped[List[Condicao]] = relationship("Condicao", lazy="selectin")

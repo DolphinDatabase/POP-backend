@@ -29,3 +29,19 @@ services:
     image: adminer
     ports:
       - 8080:8080
+
+  redis-cache:
+    image: redis:alpine
+    hostname: redis-cache
+    container_name: redis-cache
+    restart: on-failure
+    ports:
+      - '6379:6379'
+    command: redis-server
+  
+  mycassandra:
+    image: cassandra
+    container_name: mycassandra
+    ports:
+      - "9042:9042"
+      - "7000:7000"

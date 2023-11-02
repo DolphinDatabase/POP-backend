@@ -2,11 +2,11 @@ from typing import List
 
 from controller.exceptions import object_not_found_exception
 from database import SessionLocal
-from model import Termo, Usuario, Grupo, Condicao
+from model import Termo, Usuario, Condicao, Grupo, Servico
 from model.aceite import TermoAceite, CondicaoAceite
 from schema import BaseTermo
 from datetime import datetime
-from sqlalchemy import func, desc
+from sqlalchemy import desc
 
 from schema.termo_schema import AcceptTermo
 
@@ -124,41 +124,3 @@ class TermoService:
             db.commit()
 
         return novo_termo_aceite
-
-    @staticmethod
-    def get_termo(id: int):
-        with SessionLocal() as db:
-            termo = db.query(Termo).where(Termo.id == id).first()
-
-        if termo is None:
-            raise Exception(404, "Termo not found")
-
-        termo.grupo = termo.grupo.descricao
-
-        return termo
-
-    @staticmethod
-    def update_termo(id: int, novo_termo: BaseTermo):
-        with SessionLocal() as db:
-            termo = db.query(Termo).where(Termo.id == id).first()
-            if termo is None:
-                db.close()
-                raise Exception(404, "Termo not found")
-            termo.texto = novo_termo.text
-            termo.proprietario = novo_termo.proprietario
-            termo.data = datetime.now()
-            db.add(termo)
-            db.commit()
-            db.refresh(termo)
-
-        return termo
-
-    @staticmethod
-    def delete_termo(id: int):
-        with SessionLocal() as db:
-            termo = db.query(Termo).where(Termo.id == id).first()
-            if termo is None:
-                db.close()
-                raise Exception()
-            db.delete(termo)
-            db.commit()

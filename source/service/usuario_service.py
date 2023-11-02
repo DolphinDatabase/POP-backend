@@ -74,9 +74,9 @@ class UsuarioService:
         return usuario
 
     @staticmethod
-    def get_all():
+    def get_usuario_by_grupo(grupo: Grupo):
         db = SessionLocal()
-        u = db.query(Usuario.email).all()
-        if u is None:
+        users = db.query(Usuario).where(Usuario.grupo == grupo).all()
+        if users is None:
             raise Exception(404, "Table is empty")
-        return u
+        return users

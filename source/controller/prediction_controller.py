@@ -1,5 +1,5 @@
 import uuid
-from fastapi import FastAPI, HTTPException, APIRouter
+from fastapi import HTTPException, APIRouter
 from pydantic import BaseModel
 from cassandra.cluster import Cluster
 

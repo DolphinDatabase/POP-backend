@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import ValidationError
-
-from service import TermoService
+from threading import Thread
+from service import TermoService, EmailService
 from schema import BaseTermo, GetTermo, AcceptTermo
 from model import Usuario, Grupo
 from typing import Annotated
@@ -30,8 +30,10 @@ async def post(
     try:
         if user.grupo == Grupo.ADMINISTRADOR.value:
             termo = BaseTermo.model_validate(termo)
-            return TermoService.create_termo(termo)
-
+            termo_criado = TermoService.create_termo(termo)
+            Thread(target=EmailService)
+            return termo_criado
+            
         termo = AcceptTermo.model_validate(termo)
         return TermoService.accept_termo(user, termo)
     except ValidationError:

@@ -8,3 +8,5 @@ class Operation(BaseModel):
 class Land(BaseModel):
     coordinates: str
     operation: Operation
+
+

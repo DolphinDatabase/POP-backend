@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, datetime_parse
 from datetime import date
 
 
@@ -14,42 +14,42 @@ class Propriedade(BaseModel):
     operacao_id: int
 
     class Config:
-        from_attributes = True
+        orm_mode = True
 
 
 class Solo(BaseModel):
     descricao: str
 
     class Config:
-        from_attributes = True
+        orm_mode = True
 
 
 class Irrigacao(BaseModel):
     descricao: str
 
     class Config:
-        from_attributes = True
+        orm_mode = True
 
 
 class Cultivo(BaseModel):
     descricao: str
 
     class Config:
-        from_attributes = True
+        orm_mode = True
 
 
 class GraoSemente(BaseModel):
     descricao: str
 
     class Config:
-        from_attributes = True
+        orm_mode = True
 
 
 class Ciclo(BaseModel):
     descricao: str
 
     class Config:
-        from_attributes = True
+        orm_mode = True
 
 
 class Empreendimento(BaseModel):
@@ -62,7 +62,7 @@ class Empreendimento(BaseModel):
     zoneamento: str
 
     class Config:
-        from_attributes = True
+        orm_mode = True
 
 
 class Operacao(BaseModel):
@@ -83,11 +83,11 @@ class Operacao(BaseModel):
     propriedades: list[Propriedade] = []
 
     class Config:
-        from_attributes = True
+        orm_mode = True
 
 
 class Coordinates(BaseModel):
-    coordinates: tuple[tuple[float, float]]
+    coordinates: tuple[tuple[float,float]]
 
 
 class Geometry(BaseModel):
@@ -116,4 +116,11 @@ class Gleba(BaseModel):
     poligono: Feature
 
     class Config:
-        from_attributes = True
+        orm_mode = True
+
+
+class Empreendimento(BaseModel):
+    operacoes: list[Operacao] = []
+
+    class Config:
+        orm_mode = True

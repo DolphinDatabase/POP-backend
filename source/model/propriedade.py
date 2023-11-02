@@ -5,12 +5,12 @@ from database import Base
 
 
 class Propriedade(Base):
-    __tablename__ = "prp_propriedade"
+    __tablename__ = "ppr_propriedade"
 
-    id = Column("prp_id", Integer, primary_key=True, index=True)
-    sncr = Column("prp_sncr", String, index=True)
-    nirf = Column("prp_nirf", String, index=True)
-    car = Column("prp_car", String, index=True)
+    id = Column("ppr_id", Integer, primary_key=True, index=True)
+    sncr = Column("ppr_sncr", String, index=True)
+    nirf = Column("ppr_nirf", String, index=True)
+    car = Column("ppr_car", String, index=True)
 
-    operacao_id = Column("opr_id", Integer, ForeignKey("opr_operacao.opr_id"))
+    operacao_id = Column("ppr_opr", Integer, ForeignKey("opr_operacao.opr_id"))
     operacao = relationship("Operacao", back_populates="propriedade")

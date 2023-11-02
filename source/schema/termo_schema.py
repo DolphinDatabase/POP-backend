@@ -1,42 +1,15 @@
 from pydantic import BaseModel
-from datetime import datetime
-from model import Servico
-from typing import List, Optional
-
-from model import Grupo, Servico
+from datetime import date
 
 
-class BaseCondicao(BaseModel):
-    texto: str
-    servico: Servico
-
-
-class BaseTermo(BaseModel):
-    texto: str
-    grupo: Grupo
-    condicoes: List[BaseCondicao]
+class TermoBase(BaseModel):
+    text: str
+    proprietario: bool
 
     class Config:
-        from_attributes = True
+        orm_mode = True
 
 
-class GetCondicao(BaseCondicao):
+class GetTermo(TermoBase):
     id: int
-
-
-class GetTermo(BaseTermo):
-    id: int
-    data: datetime
-    condicoes: List[GetCondicao]
-
-
-class AcceptCondicao(GetCondicao):
-    aceite: bool | None
-
-
-class AcceptTermo(GetTermo):
-    aceite: bool | None
-    condicoes: List[AcceptCondicao]
-
-    class Config:
-        from_attributes = True
+    data: date

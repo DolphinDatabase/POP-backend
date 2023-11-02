@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from datetime import datetime
+from model import Servico
 from typing import List, Optional
 
 from model import Grupo, Servico
@@ -7,6 +8,7 @@ from model import Grupo, Servico
 
 class BaseCondicao(BaseModel):
     texto: str
+    servico: Servico
 
 
 class BaseTermo(BaseModel):

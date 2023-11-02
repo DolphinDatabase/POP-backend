@@ -12,7 +12,7 @@ class Gleba(Base):
     id = Column("glb_id", Integer, primary_key=True, index=True)
     _poligono = Column("glb_poligono", Geography("POLYGON"), nullable=False)
 
-    operacao_id = Column("glb_opr", Integer, ForeignKey("opr_operacao.opr_id"))
+    operacao_id = Column("opr_id", Integer, ForeignKey("opr_operacao.opr_id"))
     operacao = relationship("Operacao", back_populates="gleba", lazy="subquery")
 
     @property

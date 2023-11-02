@@ -20,25 +20,23 @@ class BaseTermo(BaseModel):
         from_attributes = True
 
 
-class GetCondicao(BaseModel):
+class GetCondicao(BaseCondicao):
     id: int
-    texto: str
 
 
-class GetTermo(BaseModel):
+class GetTermo(BaseTermo):
     id: int
-    texto: str
-    grupo: Grupo
     data: datetime
     condicoes: List[GetCondicao]
 
 
-class AcceptCondicao(BaseModel):
-    id: int
-    aceite: bool
+class AcceptCondicao(GetCondicao):
+    aceite: bool | None
 
 
-class AcceptTermo(BaseModel):
-    id: int
-    aceite: bool
+class AcceptTermo(GetTermo):
+    aceite: bool | None
     condicoes: List[AcceptCondicao]
+
+    class Config:
+        from_attributes = True

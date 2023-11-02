@@ -1,5 +1,8 @@
 from sqlalchemy import Column, ForeignKey, Table, Boolean, Integer, DateTime
+from sqlalchemy.orm import Mapped, relationship
+
 from database import Base
+from .usuario import Usuario
 
 
 class CondicaoAceite(Base):
@@ -15,6 +18,8 @@ class CondicaoAceite(Base):
     aceite = Column("utc_aceite", Boolean)
     data = Column("utc_data", DateTime)
 
+    usuario: Mapped["Usuario"] = relationship()
+
 
 class TermoAceite(Base):
     __tablename__ = "utr_usuario_termo"
@@ -28,3 +33,5 @@ class TermoAceite(Base):
 
     aceite = Column("utr_aceite", Boolean)
     data = Column("utr_data", DateTime)
+
+    usuario: Mapped["Usuario"] = relationship()

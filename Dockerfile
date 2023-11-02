@@ -1,4 +1,4 @@
-FROM python:3.11-alpine
+FROM python:3.11-bullseye
 
 COPY ./source /pop-backend
 COPY requirements.txt /pop-backend/requirements.txt

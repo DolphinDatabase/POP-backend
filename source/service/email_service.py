@@ -1,22 +1,25 @@
 from email.message import EmailMessage
+from typing import List
+
 import configuration
 import ssl
 import smtplib
 from model import Grupo, Servico, Usuario
-from .usuario_service import UsuarioService
 from .termo_service import TermoService
 
 
 class EmailService:
     def notify_group(self, grupo: Grupo):
-        for usuario in UsuarioService.get_usuario_by_grupo():
-            termo_aceite = TermoService.get_last_termo_aceite(usuario)
-            for condicao in termo_aceite.condicoes:
-                if condicao.servico == Servico.ENVIO_EMAIL.value:
-                    self.send_email(usuario)
-                    break
+        for condicao in TermoService.get_last_termo_by_grupo(grupo).condicoes:
+            if condicao.servico == Servico.ENVIO_EMAIL.value:
+                return
 
-    def send_email(self, usuario: Usuario):
+    def notify_users(self, usuarios: List[Usuario]):
+        for usuario in usuarios:
+            self.send_email(usuario)
+
+    @staticmethod
+    def send_email(usuario: Usuario):
         email_sender = "dolphin.dbfatec@gmail.com"
 
         subject = "Important Privacy Terms Update for POP Platform"

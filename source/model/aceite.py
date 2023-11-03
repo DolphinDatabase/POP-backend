@@ -18,7 +18,7 @@ class CondicaoAceite(Base):
     aceite = Column("utc_aceite", Boolean)
     data = Column("utc_data", DateTime)
 
-    usuario: Mapped["Usuario"] = relationship()
+    usuario: Mapped[Usuario] = relationship("Usuario", lazy="selectin")
 
 
 class TermoAceite(Base):
@@ -34,4 +34,4 @@ class TermoAceite(Base):
     aceite = Column("utr_aceite", Boolean)
     data = Column("utr_data", DateTime)
 
-    usuario: Mapped["Usuario"] = relationship()
+    usuario: Mapped[Usuario] = relationship("Usuario", lazy="selectin")

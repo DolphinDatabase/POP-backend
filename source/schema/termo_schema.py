@@ -8,7 +8,7 @@ from model import Grupo, Servico
 
 class BaseCondicao(BaseModel):
     texto: str
-    servico: Servico
+    servico: Servico | None
 
 
 class BaseTermo(BaseModel):
@@ -31,11 +31,11 @@ class GetTermo(BaseTermo):
 
 
 class AcceptCondicao(GetCondicao):
-    aceite: bool | None
+    aceite: bool
 
 
 class AcceptTermo(GetTermo):
-    aceite: bool | None
+    aceite: bool
     condicoes: List[AcceptCondicao]
 
     class Config:

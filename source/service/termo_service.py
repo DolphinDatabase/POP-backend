@@ -52,26 +52,10 @@ class TermoService:
             if termo is None:
                 raise object_not_found_exception
 
-            aceite = (
-                db.query(TermoAceite.aceite)
-                .where(
-                    TermoAceite.termo_id == termo.id,
-                    TermoAceite.usuario_id == usuario.id,
-                )
-                .first()
-            )
-            termo.aceite = None if aceite is None else aceite[0]
+            termo.aceite = usuario.id in [aceite.usuario.id for aceite in termo.aceites if aceite.aceite]
 
             for condicao in termo.condicoes:
-                aceite = (
-                    db.query(CondicaoAceite.aceite)
-                    .where(
-                        CondicaoAceite.condicao_id == condicao.id,
-                        CondicaoAceite.usuario_id == usuario.id,
-                    )
-                    .first()
-                )
-                condicao.aceite = None if aceite is None else aceite[0]
+                condicao.aceite = usuario.id in [aceite.usuario.id for aceite in condicao.aceites if aceite.aceite]
 
         return termo
 
@@ -118,6 +102,7 @@ class TermoService:
                 db.add(condicao_aceite)
             db.add(termo_aceite)
 
+            usuario = db.query(Usuario).where(Usuario.id == usuario.id).first()
             usuario.ativo = termo_aceite.aceite
             db.add(usuario)
 

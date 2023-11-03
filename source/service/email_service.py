@@ -1,4 +1,5 @@
 from email.message import EmailMessage
+from threading import Thread
 from typing import List
 
 import configuration
@@ -12,7 +13,8 @@ class EmailService:
     def notify_group(self, grupo: Grupo):
         for condicao in TermoService.get_last_termo_by_grupo(grupo).condicoes:
             if condicao.servico == Servico.ENVIO_EMAIL.value:
-                return
+                usuarios = [aceite.usuario for aceite in condicao.aceites if aceite.aceite]
+                Thread(target=self.notify_users, args=(usuarios,)).start()
 
     def notify_users(self, usuarios: List[Usuario]):
         for usuario in usuarios:

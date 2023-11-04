@@ -14,7 +14,7 @@ class EmailService:
         termo_antigo = TermoService.get_last_termo_by_grupo(grupo)
         if termo_antigo is None:
             return
-        for condicao in TermoService.get_last_termo_by_grupo(grupo).condicoes:
+        for condicao in termo_antigo.condicoes:
             if condicao.servico == Servico.ENVIO_EMAIL.value:
                 usuarios = [aceite.usuario for aceite in condicao.aceites if aceite.aceite]
                 Thread(target=self.notify_users, args=(usuarios,)).start()

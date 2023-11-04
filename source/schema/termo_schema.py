@@ -8,9 +8,8 @@ from model import Grupo, Servico
 
 class BaseCondicao(BaseModel):
     texto: str
-    servico: Servico | None
-
-
+    servico: Optional[Servico] = None
+    
 class BaseTermo(BaseModel):
     texto: str
     grupo: Grupo

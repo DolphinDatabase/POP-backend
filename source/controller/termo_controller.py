@@ -31,6 +31,12 @@ async def get(user: Annotated[Usuario, Depends(auth_service.get_authenticated_us
     return clean_termo(termo)
 
 
+@router.get("/{grupo}", response_model=None)
+async def get(grupo):
+    termo = TermoService.get_last_termo_by_grupo(Grupo(grupo))
+    return clean_termo(termo)
+
+
 @router.post("/", response_model=GetTermo)
 async def post(
     termo: BaseTermo,

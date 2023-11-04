@@ -11,6 +11,9 @@ from .termo_service import TermoService
 
 class EmailService:
     def notify_group(self, grupo: Grupo):
+        termo_antigo = TermoService.get_last_termo_by_grupo(grupo)
+        if termo_antigo is None:
+            return
         for condicao in TermoService.get_last_termo_by_grupo(grupo).condicoes:
             if condicao.servico == Servico.ENVIO_EMAIL.value:
                 usuarios = [aceite.usuario for aceite in condicao.aceites if aceite.aceite]

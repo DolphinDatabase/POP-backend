@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel
 from model import Grupo
 
@@ -18,3 +20,10 @@ class GetUsuario(BaseUsuario):
 
 class CreateUsuario(BaseUsuario):
     senha: str
+
+
+class UpdateUsuario(BaseModel):
+    nome: Optional[str] = None
+    doc: Optional[str] = None
+    email: Optional[str] = None
+    senha: Optional[str] = None

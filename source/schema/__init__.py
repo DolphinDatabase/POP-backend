@@ -1,5 +1,5 @@
 from .termo_schema import BaseTermo, GetTermo, AcceptTermo
-from .usuario_schema import BaseUsuario, GetUsuario, CreateUsuario
+from .usuario_schema import BaseUsuario, GetUsuario, CreateUsuario, UpdateUsuario
 from .api import Token, TokenData
 
 __all__ = [
@@ -11,4 +11,5 @@ __all__ = [
     "BaseUsuario",
     "GetUsuario",
     "CreateUsuario",
+    "UpdateUsuario"
 ]

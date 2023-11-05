@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends
 
 from model import Usuario
 from service import UsuarioService, auth_service
-from schema import GetUsuario, CreateUsuario, BaseUsuario, Token
+from schema import GetUsuario, CreateUsuario, UpdateUsuario, Token
 from fastapi_redis_cache import cache_one_hour
 
 router = APIRouter(prefix="/usuario")
@@ -26,12 +26,12 @@ async def get(user: Annotated[Usuario, Depends(auth_service.get_active_user)]):
 
 @router.put("/", response_model=GetUsuario)
 async def update(
-    usuario: BaseUsuario,
+    usuario: UpdateUsuario,
     user: Annotated[Usuario, Depends(auth_service.get_active_user)],
 ):
-    return UsuarioService.update_usuario(usuario)
+    return UsuarioService.update_usuario(usuario, user)
 
 
-@router.delete("/", response_model=GetUsuario)
+@router.delete("/", response_model=None)
 async def delete(user: Annotated[Usuario, Depends(auth_service.get_active_user)]):
-    return UsuarioService.delete_usuario(user)
+    return f"Deleted user {UsuarioService.delete_usuario(user)}"

@@ -1,7 +1,7 @@
 from controller.exceptions import registration_exception, object_not_found_exception
 from database import SessionLocal
 from model import Usuario, Grupo
-from schema import CreateUsuario, BaseUsuario
+from schema import CreateUsuario, BaseUsuario, UpdateUsuario
 from .termo_service import TermoService
 import crypt
 
@@ -40,19 +40,19 @@ class UsuarioService:
         return usuario
 
     @staticmethod
-    def update_usuario(novo_usuario: BaseUsuario) -> Usuario:
+    def update_usuario(novo_usuario: UpdateUsuario, usuario: Usuario) -> Usuario:
         with SessionLocal() as db:
-            usuario = (
-                db.query(Usuario).where(Usuario.email == novo_usuario.email).first()
-            )
+            if novo_usuario.nome is not None:
+                usuario.nome = novo_usuario.nome
 
-            if usuario is None:
-                raise object_not_found_exception
+            if novo_usuario.doc is not None:
+                usuario.doc = novo_usuario.doc
 
-            usuario.nome = novo_usuario.nome
-            usuario.doc = novo_usuario.doc
-            usuario.email = novo_usuario.email
-            usuario.senha = crypt.hash_password(novo_usuario.senha)
+            if novo_usuario.email is not None:
+                usuario.email = novo_usuario.email
+
+            if novo_usuario.senha is not None:
+                usuario.senha = crypt.hash_password(novo_usuario.senha)
 
             db.add(usuario)
             db.commit()
@@ -61,15 +61,17 @@ class UsuarioService:
         return usuario
 
     @staticmethod
-    def delete_usuario(usuario: Usuario) -> Usuario:
+    def delete_usuario(usuario: Usuario) -> int:
         with SessionLocal() as db:
-            usuario = db.query(Usuario).where(Usuario.email == usuario.email).first()
+            usuario.nome = None
+            usuario.doc = None
+            usuario.email = None
+            usuario.senha = None
+            usuario.grupo = None
+            usuario.ativo = False
 
-            if usuario is None:
-                raise object_not_found_exception
-
-            db.delete(usuario)
+            db.add(usuario)
             db.commit()
+            db.refresh(usuario)
 
-        return usuario
-
+        return usuario.id

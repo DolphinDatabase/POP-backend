@@ -79,4 +79,4 @@ def create_access_token(usuario: Usuario) -> Token:
         configuration.OAUTH_SECRET_KEY,
         algorithm=configuration.OAUTH_ALGORITHM,
     )
-    return Token(access_token=jwt_token, expire=expire, token_type="bearer")
+    return Token(access_token=jwt_token, expire=expire, token_type="bearer", role=usuario.grupo)

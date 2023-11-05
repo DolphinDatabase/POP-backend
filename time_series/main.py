@@ -45,7 +45,7 @@ def startup():
                 valor_indice FLOAT,
                 data DATE,
                 PRIMARY KEY (id_municipio, data_id)
-            ) WITH CLUSTERING ORDER BY (data_id ASC);
+            ) WITH CLUSTERING ORDER BY (data DESC, data_id ASC);
         """
         session.execute(create_table_query)
 

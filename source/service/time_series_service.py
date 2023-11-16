@@ -13,7 +13,7 @@ class TimeSeriesService:
         path = f'./source/ia_model/{str(gleba)}.h5'
         if os.path.exists(path):
             model = joblib.load(path)
-            forecast = model.get_forecast(steps=10)
+            forecast = model.get_forecast(steps=14)
             forecast = pd.DataFrame(forecast.predicted_mean)
             return json.loads(forecast.to_json())
         else:

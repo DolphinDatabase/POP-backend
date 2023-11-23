@@ -37,3 +37,22 @@ class TimeSeriesService:
             return json.loads(df.to_json())
         else:
             raise Exception(404,"No Gleba")
+        
+    @staticmethod
+    def get_weather(gleba:int,fim:str):
+        cluster = Cluster(['localhost'])
+        session = cluster.connect('prediction')
+        query = f"SELECT * FROM data_series WHERE id_municipio={gleba} AND data > '{fim}' ALLOW FILTERING"
+        rows = session.execute(query)
+        data_series_list = [{"date":row.data,"temp":row.temp,"pressure":row.pressure,"humidity":row.humidity,"wind_speed":row.wind_speed,"clouds":row.clouds} for row in rows]
+        if len(data_series_list) > 0:
+            df = pd.DataFrame(data_series_list)
+            df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d %H:%M:%S')
+            df = df.set_index('date')
+            df = df.sort_index()
+            df = df.dropna()
+            session.shutdown()
+            cluster.shutdown()
+            return json.loads(df.to_json())
+        else:
+            raise Exception(404,"No Gleba")

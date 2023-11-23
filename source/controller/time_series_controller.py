@@ -11,6 +11,7 @@ def get_data(gleba:int,inicio:str,fim:str):
     try:
         data = TimeSeriesService.get_time_series(gleba,inicio,fim)
         predict = TimeSeriesService.predict_mun(gleba)
-        return {'data':data['data'],'predict':predict['predicted_mean']}
+        weather = TimeSeriesService.get_weather(gleba,fim)
+        return {'data':data['data'],'predict':predict['predicted_mean'],'weather':weather}
     except Exception as e:
         raise HTTPException(status_code=e.args[0], detail=e.args[1])

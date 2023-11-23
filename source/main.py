@@ -61,8 +61,13 @@ def startup():
                 id_municipio INT,
                 data_id UUID,
                 valor_indice FLOAT,
-                data DATE,
-                PRIMARY KEY (id_municipio, data_id)
+                temp FLOAT,
+                pressure FLOAT,
+                humidity FLOAT,
+                wind_speed FLOAT,
+                clouds INT,
+                data TIMESTAMP,
+                PRIMARY KEY (id_municipio, data, data_id)
             ) WITH CLUSTERING ORDER BY (data DESC, data_id ASC);
         """
         session.execute(create_table_query)

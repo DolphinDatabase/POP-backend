@@ -9,10 +9,13 @@ from fastapi_redis_cache import cache_one_hour
 
 router = APIRouter(prefix="/usuario")
 
+usuario_service = UsuarioService()
+usuario_service.init_cache()
+
 
 @router.post("/", response_model=Token)
 async def create(usuario: CreateUsuario):
-    UsuarioService.create_usuario(usuario)
+    usuario_service.create_usuario(usuario)
     return auth_service.authenticate_user(usuario.email, usuario.senha)
 
 
@@ -29,9 +32,9 @@ async def update(
     usuario: UpdateUsuario,
     user: Annotated[Usuario, Depends(auth_service.get_active_user)],
 ):
-    return UsuarioService.update_usuario(usuario, user)
+    return usuario_service.update_usuario(usuario, user)
 
 
 @router.delete("/", response_model=None)
 async def delete(user: Annotated[Usuario, Depends(auth_service.get_active_user)]):
-    return f"Deleted user {UsuarioService.delete_usuario(user)}"
+    return f"Deleted user {usuario_service.deactivate_user(user)}"

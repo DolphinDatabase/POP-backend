@@ -9,6 +9,7 @@ from datetime import datetime
 from sqlalchemy import desc
 
 from schema.termo_schema import AcceptTermo
+from .usuario_service import UsuarioService
 
 
 class TermoService:
@@ -102,9 +103,8 @@ class TermoService:
                 db.add(condicao_aceite)
             db.add(termo_aceite)
 
-            usuario = db.query(Usuario).where(Usuario.id == usuario.id).first()
-            usuario.ativo = termo_aceite.aceite
-            db.add(usuario)
+            if termo_aceite.aceite:
+                UsuarioService().active_user(usuario)
 
             db.commit()
 

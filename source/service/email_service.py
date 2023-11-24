@@ -57,5 +57,4 @@ class EmailService:
 
         with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as smtp:
             smtp.login(email_sender, "rfqy xmln xhxx mukm")
-            smtp.login(email_sender, "oyka gijf mgmx vvhp")
             smtp.sendmail(email_sender, usuario.email, em.as_string())

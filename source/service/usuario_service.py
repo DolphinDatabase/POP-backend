@@ -15,18 +15,17 @@ class UsuarioService:
         sqlite_cursor = database.sqlite_conn.cursor()
         res = sqlite_cursor.execute("SELECT * FROM users")
         user_keys = res.fetchall()
-        return {email: key for (email, key) in user_keys}
+        return {id: key for (id, key) in user_keys}
 
     def encrypt_user(self, usuario: Usuario) -> Usuario:
-        key = self.get_users_keys()[usuario.email]
-        encrypted_user = deepcopy(usuario)
-        encrypted_user.email = crypt.encrypt_data(usuario.email, key)
-        encrypted_user.nome = crypt.encrypt_data(usuario.nome, key)
-        encrypted_user.doc = crypt.encrypt_data(usuario.doc, key)
-        return encrypted_user
+        key = self.get_users_keys()[usuario.id]
+        usuario.email = crypt.encrypt_data(usuario.email, key)
+        usuario.nome = crypt.encrypt_data(usuario.nome, key)
+        usuario.doc = crypt.encrypt_data(usuario.doc, key)
+        return usuario
 
     def decrypt_user(self, usuario: Usuario) -> Usuario:
-        key = self.get_users_keys()[usuario.email]
+        key = self.get_users_keys()[usuario.id]
         decrypted_user = deepcopy(usuario)
         decrypted_user.email = crypt.decrypt_data(usuario.email, key)
         decrypted_user.nome = crypt.decrypt_data(usuario.nome, key)
@@ -35,7 +34,7 @@ class UsuarioService:
 
     def init_cache(self) -> None:
         sqlite_cursor = database.sqlite_conn.cursor()
-        sqlite_cursor.execute("CREATE TABLE IF NOT EXISTS users(email, key)")
+        sqlite_cursor.execute("CREATE TABLE IF NOT EXISTS users(id, key)")
         sqlite_cursor.close()
 
         if cache.get_init():
@@ -87,16 +86,30 @@ class UsuarioService:
             return
 
         usuario.ativo = True
-        cache.add_object(f"user:{usuario.email}", usuario.as_dict())
-
-        key = crypt.generate_random_key()
-
-        database.sqlite_conn.execute(f"INSERT INTO users VALUES ('{usuario.email}', '{key}')")
-        database.sqlite_conn.commit()
 
         with SessionLocal() as db:
-            encrypted_usuario = self.encrypt_user(usuario)
-            db.add(encrypted_usuario)
+            usuario_base = Usuario()
+            usuario_base.senha = usuario.senha
+            usuario_base.grupo = usuario.grupo
+            usuario_base.ativo = usuario.ativo
+
+            db.add(usuario_base)
+            db.commit()
+            db.refresh(usuario_base)
+
+            usuario_base.email = usuario.email
+            usuario_base.nome = usuario.nome
+            usuario_base.doc = usuario.doc
+
+            key = crypt.generate_random_key()
+            database.sqlite_conn.execute(f"INSERT INTO users VALUES ({usuario_base.id}, '{key}')")
+            database.sqlite_conn.commit()
+
+            cache.add_object(f"user:{usuario_base.email}", usuario_base.as_dict())
+
+            self.encrypt_user(usuario_base)
+
+            db.add(usuario_base)
             db.commit()
 
         return usuario
@@ -115,7 +128,7 @@ class UsuarioService:
             db.add(encrypted_usuario)
             db.commit()
 
-        database.sqlite_conn.execute(f"DELETE FROM users WHERE email = '{usuario.email}'")
+        database.sqlite_conn.execute(f"DELETE FROM users WHERE id = '{usuario.id}'")
         database.sqlite_conn.commit()
 
         return usuario
@@ -141,8 +154,15 @@ class UsuarioService:
         cache.add_object(f"user:{usuario.email}", usuario.as_dict())
 
         with SessionLocal() as db:
-            encrypted_usuario = self.encrypt_user(usuario)
-            db.add(encrypted_usuario)
+            usuario_base = db.query(Usuario).where(Usuario.id == usuario.id).first()
+            usuario_base.senha = usuario.senha
+            usuario_base.email = usuario.email
+            usuario_base.nome = usuario.nome
+            usuario_base.doc = usuario.doc
+
+            self.encrypt_user(usuario_base)
+
+            db.add(usuario_base)
             db.commit()
 
         return usuario

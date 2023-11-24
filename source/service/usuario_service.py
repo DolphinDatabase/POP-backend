@@ -7,9 +7,41 @@ from schema import CreateUsuario, BaseUsuario, UpdateUsuario
 import crypt
 import cache
 import database
+import cache
+import database
 
 
 class UsuarioService:
+    def get_users_keys():
+        sqlite_cursor = database.sqlite_conn.cursor()
+        sqlite_cursor.execute("CREATE IF NOT EXISTS TABLE users(id, key)")
+        res = cur.execute("SELECT * FROM users")
+        res.fetchall()
+    
+    def crypt_user(usuario: Usuario) -> Usuario:
+        pass
+
+    def decrypt_user(usuario: Usuario) -> Usuario:
+        pass
+
+    def init_cache(self) -> None:
+        if cache.get_init():
+            return
+
+        with SessionLocal as db:
+            usuarios = db.query(Usuario).where(Usuario.ativo.is_(True))
+
+        for usuario in usuarios:
+            cache.add_object(self.decrypt_user(usuario))
+
+        cache.set_init(True)
+
+    @staticmethod
+    def get_usuario_by_email(email: str) -> Usuario:
+        with SessionLocal() as db:
+            usuario = db.query(Usuario).where(Usuario.email == email).first()
+        return usuario
+
     @staticmethod
     def get_users_keys() -> dict:
         sqlite_cursor = database.sqlite_conn.cursor()
@@ -166,3 +198,25 @@ class UsuarioService:
             db.commit()
 
         return usuario
+
+    @staticmethod
+    def update_usuario(novo_usuario: UpdateUsuario, usuario: Usuario) -> Usuario:
+        with SessionLocal() as db:
+            if novo_usuario.nome is not None:
+                usuario.nome = novo_usuario.nome
+
+            if novo_usuario.doc is not None:
+                usuario.doc = novo_usuario.doc
+
+            if novo_usuario.email is not None:
+                usuario.email = novo_usuario.email
+
+            if novo_usuario.senha is not None:
+                usuario.senha = crypt.hash_password(novo_usuario.senha)
+
+            db.add(usuario)
+            db.commit()
+            db.refresh(usuario)
+
+        return usuario
+

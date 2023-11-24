@@ -4,9 +4,41 @@ from model import Usuario, Grupo
 from schema import CreateUsuario, BaseUsuario, UpdateUsuario
 from .termo_service import TermoService
 import crypt
+import cache
+import database
 
 
 class UsuarioService:
+    def get_users_keys():
+        sqlite_cursor = database.sqlite_conn.cursor()
+        sqlite_cursor.execute("CREATE IF NOT EXISTS TABLE users(id, key)")
+        res = cur.execute("SELECT * FROM users")
+        res.fetchall()
+    
+    def crypt_user(usuario: Usuario) -> Usuario:
+        pass
+
+    def decrypt_user(usuario: Usuario) -> Usuario:
+        pass
+
+    def init_cache(self) -> None:
+        if cache.get_init():
+            return
+
+        with SessionLocal as db:
+            usuarios = db.query(Usuario).where(Usuario.ativo.is_(True))
+
+        for usuario in usuarios:
+            cache.add_object(self.decrypt_user(usuario))
+
+        cache.set_init(True)
+
+    @staticmethod
+    def get_usuario_by_email(email: str) -> Usuario:
+        with SessionLocal() as db:
+            usuario = db.query(Usuario).where(Usuario.email == email).first()
+        return usuario
+
     @staticmethod
     def create_usuario(novo_usuario: CreateUsuario) -> Usuario:
         with SessionLocal() as db:
@@ -31,12 +63,6 @@ class UsuarioService:
             db.commit()
             db.refresh(usuario)
 
-        return usuario
-
-    @staticmethod
-    def get_usuario_by_email(email: str) -> Usuario:
-        with SessionLocal() as db:
-            usuario = db.query(Usuario).where(Usuario.email == email).first()
         return usuario
 
     @staticmethod

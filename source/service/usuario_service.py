@@ -17,12 +17,6 @@ class UsuarioService:
         sqlite_cursor.execute("CREATE IF NOT EXISTS TABLE users(id, key)")
         res = cur.execute("SELECT * FROM users")
         res.fetchall()
-    
-    def crypt_user(usuario: Usuario) -> Usuario:
-        pass
-
-    def decrypt_user(usuario: Usuario) -> Usuario:
-        pass
 
     def init_cache(self) -> None:
         if cache.get_init():
@@ -111,13 +105,13 @@ class UsuarioService:
 
         return usuario
 
-    def active_user(self, usuario: Usuario):
+    def active_user(self, usuario: Usuario, ativo = True):
         usuario = self.get_usuario_by_email(usuario.email)
 
         if usuario is None:
             return
 
-        usuario.ativo = True
+        usuario.ativo = ativo
 
         with SessionLocal() as db:
             usuario_base = Usuario()
@@ -152,12 +146,13 @@ class UsuarioService:
         if usuario is None:
             return
 
-        usuario.ativo = False
         cache.remove_object(f"user:{usuario.email}")
 
         with SessionLocal() as db:
-            encrypted_usuario = self.encrypt_user(usuario)
-            db.add(encrypted_usuario)
+            usuario_base = db.query(Usuario).where(Usuario.id == usuario.id).first()
+            usuario_base.ativo = False
+            self.encrypt_user(usuario_base)
+            db.add(usuario_base)
             db.commit()
 
         database.sqlite_conn.execute(f"DELETE FROM users WHERE id = '{usuario.id}'")

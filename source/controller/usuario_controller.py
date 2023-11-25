@@ -36,5 +36,5 @@ async def update(
 
 
 @router.delete("/", response_model=None)
-async def delete(user: Annotated[Usuario, Depends(auth_service.get_active_user)]):
+async def delete(user: Annotated[Usuario, Depends(auth_service.get_authenticated_user)]):
     return f"Deleted user {usuario_service.deactivate_user(user)}"

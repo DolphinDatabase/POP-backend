@@ -155,7 +155,7 @@ class UsuarioService:
             db.add(usuario_base)
             db.commit()
 
-        database.sqlite_conn.execute(f"DELETE FROM users WHERE id = '{usuario.id}'")
+        database.sqlite_conn.execute(f"DELETE FROM users WHERE id = {usuario.id}")
         database.sqlite_conn.commit()
 
         return usuario

@@ -14,3 +14,5 @@ cassandra-driver
 joblib
 pandas
 statsmodels
+cryptography
+redis

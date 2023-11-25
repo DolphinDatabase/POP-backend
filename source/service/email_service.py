@@ -25,7 +25,7 @@ class EmailService:
 
     @staticmethod
     def send_email(usuario: Usuario):
-        email_sender = "dolphin.dbfatec@gmail.com"
+        email_sender = "hrszanini@gmail.com"
 
         subject = "Important Privacy Terms Update for POP Platform"
         body = f"""

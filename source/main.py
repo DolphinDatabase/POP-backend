@@ -74,7 +74,7 @@ def startup():
 
     redis_cache = FastApiRedisCache()
     redis_cache.init(
-        host_url=configuration.LOCAL_REDIS_URL,
+        host_url=configuration.REDIS_URL,
         prefix="myapi-cache",
         response_header="X-MyAPI-Cache",
         ignore_arg_types=[Request, Response, Session],

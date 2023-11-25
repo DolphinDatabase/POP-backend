@@ -2,6 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import configuration
+import sqlite3
 
 engine = create_engine(configuration.DATABASE_URL)
 
@@ -15,3 +16,6 @@ def get_db():
         yield db
     finally:
         db.close()
+
+
+sqlite_conn = sqlite3.connect("users_keys.db")

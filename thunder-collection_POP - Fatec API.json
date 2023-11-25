@@ -1,0 +1,254 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "POP - Fatec API",
+    "dateExported": "2023-11-24T21:57:53.264Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "26f1359f-6536-454b-87b8-0423cc54d1ab",
+            "name": "Authentication",
+            "containerId": "",
+            "created": "2023-11-01T02:16:48.613Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "2dcbb1cd-ad58-436f-8bab-50dfefab1936",
+            "name": "Usuario",
+            "containerId": "",
+            "created": "2023-11-01T02:16:57.766Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "b1d513e6-40d1-43b1-a449-fa26b0a1c4f1",
+            "name": "Termo",
+            "containerId": "",
+            "created": "2023-11-01T05:09:16.269Z",
+            "sortNum": 30000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "f07a0ed9-f9b4-45e2-a637-655742f6a147",
+            "colId": "383a171d-33d8-4998-9487-49e0c35021d7",
+            "containerId": "26f1359f-6536-454b-87b8-0423cc54d1ab",
+            "name": "Authenticate Operador",
+            "url": "/auth/",
+            "method": "POST",
+            "sortNum": 2500,
+            "created": "2023-11-01T02:00:46.893Z",
+            "modified": "2023-11-05T05:06:23.958Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "username",
+                        "value": "hrszanini@gmail.com"
+                    },
+                    {
+                        "name": "password",
+                        "value": "123"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "99407a95-65c9-4cec-adee-e9989702f4a6",
+            "colId": "383a171d-33d8-4998-9487-49e0c35021d7",
+            "containerId": "26f1359f-6536-454b-87b8-0423cc54d1ab",
+            "name": "Authenticate Admin",
+            "url": "/auth/",
+            "method": "POST",
+            "sortNum": 5000,
+            "created": "2023-11-02T21:46:08.078Z",
+            "modified": "2023-11-02T21:47:00.465Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "username",
+                        "value": "admin@teste.com"
+                    },
+                    {
+                        "name": "password",
+                        "value": "1234567"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "22ba8151-0fa0-4c7a-aed2-6f664d9bb925",
+            "colId": "383a171d-33d8-4998-9487-49e0c35021d7",
+            "containerId": "2dcbb1cd-ad58-436f-8bab-50dfefab1936",
+            "name": "Get Usuario",
+            "url": "/usuario/",
+            "method": "GET",
+            "sortNum": 15000,
+            "created": "2023-11-01T02:56:04.961Z",
+            "modified": "2023-11-01T07:14:54.539Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiaGFtaWx0b24yQHRlc3RlLmNvbSIsImV4cGlyZSI6MTY5ODgzNTQ4NS45ODI0NzN9.LwY1vabWXWnWMx0lfjLnEPHf7thpcemaukl3hgLQWAg",
+                "bearerPrefix": "bearer"
+            },
+            "tests": []
+        },
+        {
+            "_id": "768f53ed-cc15-4a32-b481-f5ed02079a98",
+            "colId": "383a171d-33d8-4998-9487-49e0c35021d7",
+            "containerId": "2dcbb1cd-ad58-436f-8bab-50dfefab1936",
+            "name": "Create Usuario Operador",
+            "url": "/usuario/",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2023-11-01T02:17:05.990Z",
+            "modified": "2023-11-05T03:53:08.040Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nome\": \"Hamilton Zanini\",\n  \"doc\": \"123456\",\n  \"email\": \"hrszanini@gmail.com\",\n  \"grupo\": \"operador\",\n  \"senha\": \"123\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "6e61484a-cdd8-4b88-8400-01e433b03d31",
+            "colId": "383a171d-33d8-4998-9487-49e0c35021d7",
+            "containerId": "2dcbb1cd-ad58-436f-8bab-50dfefab1936",
+            "name": "Update Usuario Operador",
+            "url": "/usuario/",
+            "method": "PUT",
+            "sortNum": 32500,
+            "created": "2023-11-05T03:29:58.909Z",
+            "modified": "2023-11-05T03:39:02.394Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nome\": \"12\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoib3BlcmFkb3JAdGVzdGUuY29tIiwiZXhwaXJlIjoxNjk5MTY3NTYyLjkyMjgwN30.wn2gOQtgW1VtDQWJzB1Ox4EDK_qdBB-hG-V2fSkHPzE"
+            },
+            "tests": []
+        },
+        {
+            "_id": "e2a9d5b5-e17c-4a8f-af60-553ee6a8f15a",
+            "colId": "383a171d-33d8-4998-9487-49e0c35021d7",
+            "containerId": "2dcbb1cd-ad58-436f-8bab-50dfefab1936",
+            "name": "Create Usuario Admin",
+            "url": "/usuario/",
+            "method": "POST",
+            "sortNum": 35000,
+            "created": "2023-11-01T05:08:01.627Z",
+            "modified": "2023-11-24T21:10:40.709Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nome\": \"Hamilton Zanini\",\n  \"doc\": \"12112\",\n  \"email\": \"admin@teste.com\",\n  \"grupo\": \"administrador\",\n  \"senha\": \"1234567\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "20e7d392-06f4-4dd8-be09-60b993d03049",
+            "colId": "383a171d-33d8-4998-9487-49e0c35021d7",
+            "containerId": "b1d513e6-40d1-43b1-a449-fa26b0a1c4f1",
+            "name": "Get Termo",
+            "url": "/termo/",
+            "method": "GET",
+            "sortNum": 50000,
+            "created": "2023-11-01T05:09:28.826Z",
+            "modified": "2023-11-05T05:06:31.567Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiaHJzemFuaW5pQGdtYWlsLmNvbSIsImV4cGlyZSI6MTY5OTE3MzM4NC40MjM3NzR9.cVYvadk1KWJsbVgMRCQS09aQdQDs0jfu6_cqlI6XsPc"
+            },
+            "tests": []
+        },
+        {
+            "_id": "c24449cc-a17b-4cc4-ade5-2315c430c829",
+            "colId": "383a171d-33d8-4998-9487-49e0c35021d7",
+            "containerId": "b1d513e6-40d1-43b1-a449-fa26b0a1c4f1",
+            "name": "Create Termo",
+            "url": "/termo/",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2023-11-01T05:40:22.847Z",
+            "modified": "2023-11-24T21:13:20.301Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"grupo\": \"operador\",\n  \"texto\": \"asdizzzzjhaisdjasidjasd\",\n  \"condicoes\": [\n    {\n      \"texto\": \"123123123\",\n      \"servico\": \"envio_email\"\n    }\n  ]\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AdGVzdGUuY29tIiwiZXhwaXJlIjoxNzAwODcyOTg5LjE5NTQyMn0.RbaC3fc5h-HA2ylsxa2ZeXvtHJyq2FZwtdAZ7G4FW-o"
+            },
+            "tests": []
+        },
+        {
+            "_id": "554cc87b-34d8-476e-98cd-82c514663881",
+            "colId": "383a171d-33d8-4998-9487-49e0c35021d7",
+            "containerId": "b1d513e6-40d1-43b1-a449-fa26b0a1c4f1",
+            "name": "Accept Termo",
+            "url": "/termo/",
+            "method": "PUT",
+            "sortNum": 70000,
+            "created": "2023-11-02T21:13:43.192Z",
+            "modified": "2023-11-05T05:06:55.830Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"data\": \"2023-11-05T01:10:18.885701\",\n  \"texto\": \"asdizzzzjhaisdjasidjasd\",\n  \"grupo\": \"operador\",\n  \"id\": 16,\n  \"condicoes\": [\n    {\n      \"termo_id\": 16,\n      \"id\": 27,\n      \"texto\": \"123123123\",\n      \"servico\": \"envio_email\",\n      \"aceite\": true\n    }\n  ],\n  \"aceite\": true\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiaHJzemFuaW5pQGdtYWlsLmNvbSIsImV4cGlyZSI6MTY5OTE3MzM4NC40MjM3NzR9.cVYvadk1KWJsbVgMRCQS09aQdQDs0jfu6_cqlI6XsPc"
+            },
+            "tests": []
+        },
+        {
+            "_id": "55a67272-6d3c-47f3-b5ee-465182ab286b",
+            "colId": "383a171d-33d8-4998-9487-49e0c35021d7",
+            "containerId": "2dcbb1cd-ad58-436f-8bab-50dfefab1936",
+            "name": "Remove Usuario",
+            "url": "/usuario/",
+            "method": "DELETE",
+            "sortNum": 90000,
+            "created": "2023-11-05T03:44:49.493Z",
+            "modified": "2023-11-05T03:50:09.338Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoib3BlcmFkb3JAdGVzdGUxMjMuY29tIiwiZXhwaXJlIjoxNjk5MTY4NzEzLjY2NTEzNn0.NirvnFRpUDXoBxXIG9xhhxz0VlKCLJb8qy9cFikDxN4"
+            },
+            "tests": []
+        }
+    ],
+    "settings": {
+        "options": {
+            "baseUrl": "http://localhost:5050"
+        }
+    }
+}

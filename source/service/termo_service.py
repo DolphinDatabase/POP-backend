@@ -9,6 +9,7 @@ from datetime import datetime
 from sqlalchemy import desc
 
 from schema.termo_schema import AcceptTermo
+from .usuario_service import UsuarioService
 
 
 class TermoService:
@@ -51,7 +52,7 @@ class TermoService:
 
             if termo is None:
                 raise object_not_found_exception
-
+    
             termo.aceite = usuario.id in [aceite.usuario.id for aceite in termo.aceites if aceite.aceite]
 
             for condicao in termo.condicoes:
@@ -68,6 +69,11 @@ class TermoService:
                 .order_by(desc(Termo.data))
                 .first()
             )
+
+            if not usuario.id or usuario.id is None:
+                UsuarioService().active_user(usuario, novo_termo_aceite.aceite)
+
+            usuario = UsuarioService().get_usuario_by_email(usuario.email)
 
             if termo.id != novo_termo_aceite.id:
                 raise object_not_found_exception
@@ -101,10 +107,6 @@ class TermoService:
 
                 db.add(condicao_aceite)
             db.add(termo_aceite)
-
-            usuario = db.query(Usuario).where(Usuario.id == usuario.id).first()
-            usuario.ativo = termo_aceite.aceite
-            db.add(usuario)
 
             db.commit()
 

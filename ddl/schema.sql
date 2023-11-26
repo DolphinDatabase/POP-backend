@@ -55,9 +55,9 @@ CREATE TYPE zoneamento_type AS ENUM (
 
 CREATE TABLE usr_usuario (
     usr_id SERIAL PRIMARY KEY,
-    usr_nome VARCHAR(150),
-    usr_doc VARCHAR(14),
-    usr_email VARCHAR(255) UNIQUE,
+    usr_nome TEXT,
+    usr_doc TEXT,
+    usr_email TEXT,
     usr_senha VARCHAR(255),
 	usr_grupo VARCHAR(25),
 	usr_ativo BOOLEAN
